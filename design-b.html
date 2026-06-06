@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>נויה אלפי — מדיה קיט</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #1A1A1A;
+      --white: #FFFFFF;
+      --pink: #FF3366;
+      --pink-light: #FFE8EF;
+      --gray-light: #F5F5F5;
+      --gray-mid: #888;
+      --red-circle: #FF0033;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      direction: rtl;
+      overflow-x: hidden;
+    }
+
+    /* ─── HERO ─────────────────────────────────────────── */
+    .hero {
+      background: var(--black);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* hot-pink gradient accent stripe on left edge (visual right in RTL) */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 6px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--pink) 0%, #ff6b98 50%, var(--pink) 100%);
+    }
+
+    /* subtle grid texture */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,51,102,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,51,102,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .hero-text { order: 1; }
+    .hero-photo { order: 2; }
+
+    .hero-eyebrow {
+      display: inline-block;
+      background: var(--pink);
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      margin-bottom: 28px;
+    }
+
+    .hero-name {
+      font-size: clamp(56px, 7vw, 96px);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 0.95;
+      letter-spacing: -2px;
+      margin-bottom: 20px;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(18px, 2.5vw, 26px);
+      font-weight: 700;
+      color: var(--pink);
+      margin-bottom: 24px;
+      letter-spacing: 1px;
+    }
+
+    .hero-tagline {
+      font-size: clamp(15px, 1.8vw, 20px);
+      font-weight: 300;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 48px;
+      line-height: 1.6;
+      max-width: 480px;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--pink);
+      color: var(--white);
+      font-family: 'Heebo', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      padding: 18px 48px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-primary:hover {
+      background: #e0002f;
+      transform: translateY(-2px);
+    }
+
+    .hero-photo-wrap {
+      position: relative;
+    }
+
+    .photo-placeholder {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: #2a2a2a;
+      border: 3px solid var(--pink);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .photo-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,51,102,0.12) 0%, transparent 60%);
+    }
+
+    .photo-placeholder-icon {
+      font-size: 52px;
+      opacity: 0.4;
+    }
+
+    .photo-placeholder-text {
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .photo-corner {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-color: var(--pink);
+      border-style: solid;
+    }
+    .photo-corner.tl { top: -8px; right: -8px; border-width: 3px 3px 0 0; }
+    .photo-corner.br { bottom: -8px; left: -8px; border-width: 0 0 3px 3px; }
+
+    /* ─── STATS BAR ─────────────────────────────────────── */
+    .stats-bar {
+      background: var(--black);
+      border-top: 1px solid #2d2d2d;
+    }
+
+    .stats-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .stat-item {
+      padding: 52px 20px;
+      text-align: center;
+      border-left: 1px solid #2d2d2d;
+      transition: background 0.2s;
+    }
+
+    .stat-item:last-child { border-left: none; }
+
+    .stat-item:hover { background: #222; }
+
+    .stat-number {
+      display: block;
+      font-size: clamp(36px, 4vw, 58px);
+      font-weight: 900;
+      color: var(--pink);
+      line-height: 1;
+      letter-spacing: -1px;
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: #999;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* ─── ABOUT ─────────────────────────────────────────── */
+    .about {
+      background: var(--white);
+      padding: 100px 40px;
+    }
+
+    .about-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .section-heading {
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 900;
+      color: var(--black);
+      border-right: 5px solid var(--pink);
+      padding-right: 20px;
+      margin-bottom: 36px;
+      line-height: 1.1;
+    }
+
+    .about-bio {
+      font-size: 17px;
+      font-weight: 400;
+      color: #444;
+      line-height: 1.85;
+      margin-bottom: 32px;
+    }
+
+    .about-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tag {
+      background: var(--pink-light);
+      color: var(--pink);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 7px 16px;
+      letter-spacing: 0.5px;
+    }
+
+    .about-photo {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: var(--gray-light);
+      border: 2px solid #eee;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: #ccc;
+      position: relative;
+    }
+
+    .about-photo::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      right: -10px;
+      width: 80px;
+      height: 80px;
+      background: var(--pink);
+      z-index: -1;
+    }
+
+    /* ─── SERVICES ──────────────────────────────────────── */
+    .services {
+      background: var(--pink-light);
+      padding: 100px 40px;
+    }
+
+    .services-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .services-title {
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 900;
+      color: var(--black);
+      border-right: 5px solid var(--pink);
+      padding-right: 20px;
+      margin-bottom: 56px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .service-card {
+      background: var(--white);
+      padding: 44px 36px;
+      border-top: 4px solid var(--pink);
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(255,51,102,0.15);
+    }
+
+    .service-icon {
+      font-size: 36px;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .service-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--black);
+      margin-bottom: 14px;
+    }
+
+    .service-desc {
+      font-size: 15px;
+      font-weight: 400;
+      color: #666;
+      line-height: 1.7;
+    }
+
+    /* ─── VIDEO RESULTS ─────────────────────────────────── */
+    .videos {
+      background: var(--black);
+      padding: 100px 40px;
+    }
+
+    .videos-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .videos-title {
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 900;
+      color: var(--white);
+      border-right: 5px solid var(--pink);
+      padding-right: 20px;
+      margin-bottom: 56px;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .video-thumb {
+      background: #2c2c2c;
+      aspect-ratio: 9/16;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .video-thumb:hover { transform: scale(1.02); }
+
+    .video-thumb::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.7) 100%);
+    }
+
+    .video-thumb-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .play-btn {
+      width: 44px;
+      height: 44px;
+      background: rgba(255,255,255,0.15);
+      border: 2px solid rgba(255,255,255,0.5);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: white;
+      backdrop-filter: blur(4px);
+      padding-left: 3px;
+    }
+
+    .view-count-wrap {
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+    }
+
+    .view-count {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--white);
+      position: relative;
+      z-index: 2;
+      display: inline-block;
+    }
+
+    .view-count-wrap svg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90px;
+      height: 40px;
+      z-index: 1;
+    }
+
+    /* video line detail */
+    .video-line {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--pink) 0%, transparent 100%);
+    }
+
+    /* ─── BRANDS ────────────────────────────────────────── */
+    .brands {
+      background: var(--white);
+      padding: 100px 40px;
+      overflow: hidden;
+    }
+
+    .brands-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .brands-title {
+      font-size: clamp(28px, 3.5vw, 48px);
+      font-weight: 900;
+      color: var(--black);
+      border-right: 5px solid var(--pink);
+      padding-right: 20px;
+      margin-bottom: 56px;
+    }
+
+    .marquee-wrapper {
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 40px;
+    }
+
+    .marquee-wrapper::before,
+    .marquee-wrapper::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      width: 80px;
+      height: 100%;
+      z-index: 2;
+    }
+
+    .marquee-wrapper::before {
+      right: 0;
+      background: linear-gradient(270deg, white, transparent);
+    }
+
+    .marquee-wrapper::after {
+      left: 0;
+      background: linear-gradient(90deg, white, transparent);
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 0;
+      animation: marquee 28s linear infinite;
+      width: max-content;
+    }
+
+    .marquee-track:hover { animation-play-state: paused; }
+
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .brand-item {
+      display: inline-flex;
+      align-items: center;
+      padding: 0 32px;
+      border-left: 1px solid #e8e8e8;
+      white-space: nowrap;
+      height: 72px;
+      transition: color 0.2s;
+    }
+
+    .brand-item:hover { color: var(--pink); }
+
+    /* Individual brand styles for variety */
+    .b1  { font-size: 11px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; color: #1A1A1A; }
+    .b2  { font-size: 18px; font-weight: 300; letter-spacing: 4px; text-transform: uppercase; color: #333; font-style: italic; }
+    .b3  { font-size: 14px; font-weight: 800; letter-spacing: 2px; color: #111; }
+    .b4  { font-size: 13px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #222; }
+    .b5  { font-size: 20px; font-weight: 900; letter-spacing: -1px; color: #1A1A1A; }
+    .b6  { font-size: 15px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: #333; }
+    .b7  { font-size: 22px; font-weight: 900; letter-spacing: -0.5px; color: #111; }
+    .b8  { font-size: 14px; font-weight: 500; letter-spacing: 1px; color: #444; }
+    .b9  { font-size: 13px; font-weight: 900; letter-spacing: 1.5px; text-transform: lowercase; color: #222; }
+    .b10 { font-size: 18px; font-weight: 700; letter-spacing: 0; color: #1A1A1A; }
+    .b11 { font-size: 14px; font-weight: 500; letter-spacing: 1px; color: #555; }
+    .b12 { font-size: 17px; font-weight: 800; letter-spacing: 1px; color: #1A1A1A; }
+    .b13 { font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #333; }
+    .b14 { font-size: 14px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase; color: #444; }
+    .b15 { font-size: 18px; font-weight: 900; letter-spacing: -0.5px; color: #111; }
+    .b16 { font-size: 12px; font-weight: 600; letter-spacing: 1px; color: #555; }
+    .b17 { font-size: 15px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: #222; }
+    .b18 { font-size: 16px; font-weight: 900; letter-spacing: 1px; color: #1A1A1A; }
+    .b19 { font-size: 14px; font-weight: 700; letter-spacing: 0.5px; color: #333; }
+    .b20 { font-size: 20px; font-weight: 900; letter-spacing: 0; color: #111; }
+    .b21 { font-size: 13px; font-weight: 600; letter-spacing: 2px; color: #555; }
+
+    .brands-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      border: 1px solid #e8e8e8;
+    }
+
+    .brand-cell {
+      flex: 0 0 auto;
+      padding: 24px 36px;
+      border-left: 1px solid #e8e8e8;
+      border-bottom: 1px solid #e8e8e8;
+      display: flex;
+      align-items: center;
+      transition: background 0.2s, color 0.2s;
+      cursor: default;
+    }
+
+    .brand-cell:hover {
+      background: var(--pink-light);
+      color: var(--pink);
+    }
+
+    /* ─── CONTACT ───────────────────────────────────────── */
+    .contact {
+      background: var(--pink);
+      padding: 100px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      left: -100px;
+      width: 400px;
+      height: 400px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 50%;
+    }
+
+    .contact::after {
+      content: '';
+      position: absolute;
+      bottom: -80px;
+      right: -80px;
+      width: 300px;
+      height: 300px;
+      background: rgba(0,0,0,0.08);
+      border-radius: 50%;
+    }
+
+    .contact-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .contact-title {
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 900;
+      color: var(--white);
+      text-align: center;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+    }
+
+    .contact-sub {
+      text-align: center;
+      color: rgba(255,255,255,0.8);
+      font-size: 17px;
+      font-weight: 400;
+      margin-bottom: 52px;
+    }
+
+    .contact-form {
+      background: var(--white);
+      padding: 48px 48px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group.full { grid-column: 1 / -1; }
+
+    .form-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--black);
+      letter-spacing: 0.5px;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      font-family: 'Heebo', sans-serif;
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--black);
+      background: var(--gray-light);
+      border: 2px solid transparent;
+      padding: 14px 16px;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      width: 100%;
+      direction: rtl;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: var(--pink);
+      background: white;
+    }
+
+    .form-textarea { resize: vertical; min-height: 120px; }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Heebo', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      padding: 18px;
+      border: none;
+      cursor: pointer;
+      margin-top: 24px;
+      letter-spacing: 1px;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-submit:hover {
+      background: #333;
+      transform: translateY(-2px);
+    }
+
+    /* ─── FOOTER ────────────────────────────────────────── */
+    footer {
+      background: var(--black);
+      padding: 36px 40px;
+      text-align: center;
+      border-top: 3px solid var(--pink);
+    }
+
+    .footer-text {
+      font-size: 14px;
+      font-weight: 400;
+      color: #666;
+      letter-spacing: 1px;
+    }
+
+    .footer-text span {
+      color: var(--pink);
+      font-weight: 700;
+    }
+
+    /* ─── RESPONSIVE ────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        padding: 60px 24px;
+        gap: 48px;
+      }
+      .hero-text { order: 1; }
+      .hero-photo { order: 2; max-width: 300px; margin: 0 auto; }
+
+      .stats-inner {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 0 24px;
+      }
+      .stat-item:nth-child(2) { border-left: none; }
+
+      .about-inner { grid-template-columns: 1fr; padding: 0; }
+      .about { padding: 72px 24px; }
+      .about-photo { max-width: 280px; }
+
+      .services { padding: 72px 24px; }
+      .services-grid { grid-template-columns: 1fr; }
+
+      .videos { padding: 72px 24px; }
+      .video-grid { grid-template-columns: repeat(2, 1fr); }
+
+      .brands { padding: 72px 24px; }
+      .contact { padding: 72px 24px; }
+      .contact-form { padding: 32px 24px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      .stats-inner { grid-template-columns: 1fr 1fr; }
+      .stat-item { padding: 36px 12px; }
+      .stat-number { font-size: 32px; }
+      .video-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-eyebrow">Media Kit 2025</div>
+      <h1 class="hero-name">נויה<br/>אלפי</h1>
+      <p class="hero-subtitle">יוצרת תוכן&nbsp;&nbsp;•&nbsp;&nbsp;TikTok&nbsp;&nbsp;•&nbsp;&nbsp;Reels</p>
+      <p class="hero-tagline">תוכן שמביא תוצאות. צילום שמספר סיפור.</p>
+      <a href="#contact" class="btn-primary">בואי נשתף פעולה →</a>
+    </div>
+    <div class="hero-photo">
+      <div class="hero-photo-wrap">
+        <div class="photo-placeholder">
+          <div class="photo-corner tl"></div>
+          <div class="photo-corner br"></div>
+          <span class="photo-placeholder-icon">📸</span>
+          <span class="photo-placeholder-text">תמונה כאן</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     STATS BAR
+═══════════════════════════════════════════════ -->
+<section class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <span class="stat-number">20K</span>
+      <span class="stat-label">עוקבים טיקטוק</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">14.1K</span>
+      <span class="stat-label">עוקבים אינסטגרם</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">+1.2M</span>
+      <span class="stat-label">לייקים</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">619.9K</span>
+      <span class="stat-label">צפיות מקסימום</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     ABOUT
+═══════════════════════════════════════════════ -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-text">
+      <h2 class="section-heading">מי אני</h2>
+      <p class="about-bio">
+        שמי נויה אלפי, יוצרת תוכן ומשפיענית בטיקטוק עם ניסיון של למעלה מ־4 שנים.
+        עבדתי עם מותגים מובילים כמו American Eagle, L'Oréal, Maybelline ועוד.
+        אני מציעה שיתופי פעולה, צילום מקצועי לעסקים, סרטוני תדמית, ועריכה מאפס.
+      </p>
+      <div class="about-tags">
+        <span class="tag">TikTok Creator</span>
+        <span class="tag">Reels</span>
+        <span class="tag">צילום מקצועי</span>
+        <span class="tag">עריכת וידאו</span>
+        <span class="tag">4+ שנות ניסיון</span>
+      </div>
+    </div>
+    <div class="about-photo">
+      <span style="font-size:40px;opacity:.3">👤</span>
+      <span style="font-size:12px;color:#bbb;letter-spacing:2px;text-transform:uppercase">תמונה</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     SERVICES
+═══════════════════════════════════════════════ -->
+<section class="services" id="services">
+  <div class="services-inner">
+    <h2 class="services-title">מה אני מציעה</h2>
+    <div class="services-grid">
+
+      <div class="service-card">
+        <span class="service-icon">📱</span>
+        <h3 class="service-title">שיתופי פעולה</h3>
+        <p class="service-desc">קמפיינים ב־TikTok ו־Reels עם תוכן אותנטי שמדבר לקהל הנכון. UGC, ספונסרד, ריוויוז ועוד.</p>
+      </div>
+
+      <div class="service-card">
+        <span class="service-icon">📸</span>
+        <h3 class="service-title">צילום מקצועי</h3>
+        <p class="service-desc">מצלמה מקצועית, ניסיון של 5 שנים בצילום מוצר, אווירה ואנשים. מתאים לעסקים, חנויות ומותגים.</p>
+      </div>
+
+      <div class="service-card">
+        <span class="service-icon">🎬</span>
+        <h3 class="service-title">סרטוני תדמית</h3>
+        <p class="service-desc">עריכה מאפס — צילום, עיצוב, קריינות, מוזיקה. סרטוני תדמית שמייצגים את המותג שלך בצורה הטובה ביותר.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     VIDEO RESULTS
+═══════════════════════════════════════════════ -->
+<section class="videos" id="videos">
+  <div class="videos-inner">
+    <h2 class="videos-title">הסרטונים שלי</h2>
+    <div class="video-grid">
+
+      <!-- Video 1 -->
+      <div class="video-thumb">
+        <div class="video-thumb-inner">
+          <div class="play-btn">▶</div>
+        </div>
+        <div class="view-count-wrap">
+          <span class="view-count">619.9K</span>
+          <svg viewBox="0 0 90 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:110px;height:44px;z-index:1;">
+            <ellipse cx="45" cy="20" rx="40" ry="14" stroke="#FF0033" stroke-width="3.5" stroke-dasharray="6 3" transform="rotate(-3 45 20)" />
+          </svg>
+        </div>
+        <div class="video-line"></div>
+      </div>
+
+      <!-- Video 2 -->
+      <div class="video-thumb">
+        <div class="video-thumb-inner">
+          <div class="play-btn">▶</div>
+        </div>
+        <div class="view-count-wrap">
+          <span class="view-count">92.8K</span>
+          <svg viewBox="0 0 90 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100px;height:42px;z-index:1;">
+            <ellipse cx="45" cy="20" rx="38" ry="13" stroke="#FF0033" stroke-width="3.5" stroke-dasharray="5 4" transform="rotate(2 45 20)" />
+          </svg>
+        </div>
+        <div class="video-line"></div>
+      </div>
+
+      <!-- Video 3 -->
+      <div class="video-thumb">
+        <div class="video-thumb-inner">
+          <div class="play-btn">▶</div>
+        </div>
+        <div class="view-count-wrap">
+          <span class="view-count">72K</span>
+          <svg viewBox="0 0 90 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:90px;height:40px;z-index:1;">
+            <ellipse cx="45" cy="20" rx="36" ry="13" stroke="#FF0033" stroke-width="3.5" stroke-dasharray="7 2" transform="rotate(-1.5 45 20)" />
+          </svg>
+        </div>
+        <div class="video-line"></div>
+      </div>
+
+      <!-- Video 4 -->
+      <div class="video-thumb">
+        <div class="video-thumb-inner">
+          <div class="play-btn">▶</div>
+        </div>
+        <div class="view-count-wrap">
+          <span class="view-count">65.9K</span>
+          <svg viewBox="0 0 90 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100px;height:42px;z-index:1;">
+            <ellipse cx="45" cy="20" rx="39" ry="14" stroke="#FF0033" stroke-width="3.5" stroke-dasharray="4 4" transform="rotate(3 45 20)" />
+          </svg>
+        </div>
+        <div class="video-line"></div>
+      </div>
+
+      <!-- Video 5 -->
+      <div class="video-thumb">
+        <div class="video-thumb-inner">
+          <div class="play-btn">▶</div>
+        </div>
+        <div class="view-count-wrap">
+          <span class="view-count">56.6K</span>
+          <svg viewBox="0 0 90 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100px;height:42px;z-index:1;">
+            <ellipse cx="45" cy="20" rx="37" ry="13" stroke="#FF0033" stroke-width="3.5" stroke-dasharray="6 3" transform="rotate(-2 45 20)" />
+          </svg>
+        </div>
+        <div class="video-line"></div>
+      </div>
+
+      <!-- Video 6 -->
+      <div class="video-thumb">
+        <div class="video-thumb-inner">
+          <div class="play-btn">▶</div>
+        </div>
+        <div class="view-count-wrap">
+          <span class="view-count">46.3K</span>
+          <svg viewBox="0 0 90 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:96px;height:40px;z-index:1;">
+            <ellipse cx="45" cy="20" rx="38" ry="13" stroke="#FF0033" stroke-width="3.5" stroke-dasharray="5 3" transform="rotate(1 45 20)" />
+          </svg>
+        </div>
+        <div class="video-line"></div>
+      </div>
+
+      <!-- Video 7 -->
+      <div class="video-thumb">
+        <div class="video-thumb-inner">
+          <div class="play-btn">▶</div>
+        </div>
+        <div class="view-count-wrap">
+          <span class="view-count">39.4K</span>
+          <svg viewBox="0 0 90 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100px;height:42px;z-index:1;">
+            <ellipse cx="45" cy="20" rx="38" ry="14" stroke="#FF0033" stroke-width="3.5" stroke-dasharray="7 3" transform="rotate(-3 45 20)" />
+          </svg>
+        </div>
+        <div class="video-line"></div>
+      </div>
+
+      <!-- Video 8 -->
+      <div class="video-thumb">
+        <div class="video-thumb-inner">
+          <div class="play-btn">▶</div>
+        </div>
+        <div class="view-count-wrap">
+          <span class="view-count">31.6K</span>
+          <svg viewBox="0 0 90 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:96px;height:40px;z-index:1;">
+            <ellipse cx="45" cy="20" rx="37" ry="13" stroke="#FF0033" stroke-width="3.5" stroke-dasharray="6 2" transform="rotate(2 45 20)" />
+          </svg>
+        </div>
+        <div class="video-line"></div>
+      </div>
+
+      <!-- Video 9 -->
+      <div class="video-thumb">
+        <div class="video-thumb-inner">
+          <div class="play-btn">▶</div>
+        </div>
+        <div class="view-count-wrap">
+          <span class="view-count">21.3K</span>
+          <svg viewBox="0 0 90 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:92px;height:40px;z-index:1;">
+            <ellipse cx="45" cy="20" rx="36" ry="13" stroke="#FF0033" stroke-width="3.5" stroke-dasharray="5 4" transform="rotate(-1 45 20)" />
+          </svg>
+        </div>
+        <div class="video-line"></div>
+      </div>
+
+    </div><!-- /video-grid -->
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     BRANDS
+═══════════════════════════════════════════════ -->
+<section class="brands" id="brands">
+  <div class="brands-inner">
+    <h2 class="brands-title">עבדתי עם המותגים הגדולים</h2>
+
+    <!-- Animated marquee -->
+    <div class="marquee-wrapper">
+      <div class="marquee-track">
+        <span class="brand-item b1">AMERICAN EAGLE OUTFITTERS</span>
+        <span class="brand-item b2">LANCÔME PARIS</span>
+        <span class="brand-item b3">ATLAS HOTELS</span>
+        <span class="brand-item b4">L'ORÉAL PARIS</span>
+        <span class="brand-item b5">BILLABONG</span>
+        <span class="brand-item b6">FLYING TIGER</span>
+        <span class="brand-item b7">PIEDRA</span>
+        <span class="brand-item b8">המרקכלין</span>
+        <span class="brand-item b9">:story</span>
+        <span class="brand-item b10">PITMASTER</span>
+        <span class="brand-item b11">חנות הוורדה</span>
+        <span class="brand-item b12">Nestlé</span>
+        <span class="brand-item b13">T-LAB</span>
+        <span class="brand-item b14">Airalo</span>
+        <span class="brand-item b15">NAYA BEACH</span>
+        <span class="brand-item b16">sayeret.co.il</span>
+        <span class="brand-item b17">MAYER HOUSE</span>
+        <span class="brand-item b18">MAYBELLINE</span>
+        <span class="brand-item b19">BY14</span>
+        <span class="brand-item b20">NYX</span>
+        <span class="brand-item b21">המון</span>
+        <span class="brand-item b1" style="font-size:16px;letter-spacing:2px;">הסטוק</span>
+        <!-- duplicate for seamless loop -->
+        <span class="brand-item b1">AMERICAN EAGLE OUTFITTERS</span>
+        <span class="brand-item b2">LANCÔME PARIS</span>
+        <span class="brand-item b3">ATLAS HOTELS</span>
+        <span class="brand-item b4">L'ORÉAL PARIS</span>
+        <span class="brand-item b5">BILLABONG</span>
+        <span class="brand-item b6">FLYING TIGER</span>
+        <span class="brand-item b7">PIEDRA</span>
+        <span class="brand-item b8">המרקכלין</span>
+        <span class="brand-item b9">:story</span>
+        <span class="brand-item b10">PITMASTER</span>
+        <span class="brand-item b11">חנות הוורדה</span>
+        <span class="brand-item b12">Nestlé</span>
+        <span class="brand-item b13">T-LAB</span>
+        <span class="brand-item b14">Airalo</span>
+        <span class="brand-item b15">NAYA BEACH</span>
+        <span class="brand-item b16">sayeret.co.il</span>
+        <span class="brand-item b17">MAYER HOUSE</span>
+        <span class="brand-item b18">MAYBELLINE</span>
+        <span class="brand-item b19">BY14</span>
+        <span class="brand-item b20">NYX</span>
+        <span class="brand-item b21">המון</span>
+        <span class="brand-item b1" style="font-size:16px;letter-spacing:2px;">הסטוק</span>
+      </div>
+    </div>
+
+    <!-- Static grid of brands -->
+    <div class="brands-grid">
+      <div class="brand-cell b1">AMERICAN EAGLE<br/><small style="font-size:9px;letter-spacing:2px;font-weight:400">OUTFITTERS</small></div>
+      <div class="brand-cell b2">LANCÔME</div>
+      <div class="brand-cell b3">ATLAS HOTELS</div>
+      <div class="brand-cell b4">L'ORÉAL PARIS</div>
+      <div class="brand-cell b5">BILLABONG</div>
+      <div class="brand-cell b6">FLYING TIGER</div>
+      <div class="brand-cell b7">PIEDRA</div>
+      <div class="brand-cell b8">המרקכלין</div>
+      <div class="brand-cell b9">:story</div>
+      <div class="brand-cell b10">PITMASTER</div>
+      <div class="brand-cell b11">חנות הוורדה</div>
+      <div class="brand-cell b12">Nestlé</div>
+      <div class="brand-cell b13">T-LAB</div>
+      <div class="brand-cell b14">Airalo</div>
+      <div class="brand-cell b15">NAYA BEACH</div>
+      <div class="brand-cell b16">sayeret.co.il</div>
+      <div class="brand-cell b17">MAYER HOUSE</div>
+      <div class="brand-cell b18">MAYBELLINE</div>
+      <div class="brand-cell b19">BY14</div>
+      <div class="brand-cell b20">NYX</div>
+      <div class="brand-cell b21">המון</div>
+      <div class="brand-cell b3" style="font-size:17px;font-weight:700;letter-spacing:1px">הסטוק</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     CONTACT
+═══════════════════════════════════════════════ -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <h2 class="contact-title">בואו נדבר</h2>
+    <p class="contact-sub">מעוניינים בשיתוף פעולה? אשמח לשמוע מכם</p>
+
+    <form class="contact-form" action="mailto:noya@example.com" method="post" enctype="text/plain">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="name">שם מלא</label>
+          <input class="form-input" type="text" id="name" name="name" placeholder="הכניסי שם מלא" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="brand">שם המותג / עסק</label>
+          <input class="form-input" type="text" id="brand" name="brand" placeholder="שם המותג שלכם" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group full">
+          <label class="form-label" for="email">אימייל</label>
+          <input class="form-input" type="email" id="email" name="email" placeholder="your@email.com" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group full">
+          <label class="form-label" for="collab">סוג שיתוף פעולה</label>
+          <select class="form-select" id="collab" name="collab">
+            <option value="" disabled selected>בחרו סוג שיתוף פעולה</option>
+            <option value="tiktok">סרטון TikTok</option>
+            <option value="reels">Instagram Reels</option>
+            <option value="photo">צילום מקצועי</option>
+            <option value="brand-video">סרטון תדמית</option>
+            <option value="ugc">UGC / תוכן גולשים</option>
+            <option value="other">אחר</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group full">
+          <label class="form-label" for="message">הודעה</label>
+          <textarea class="form-textarea" id="message" name="message" placeholder="ספרו לי על הפרויקט, התקציב ומה שחשוב לכם..."></textarea>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit">שלח הודעה ←</button>
+    </form>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════ -->
+<footer>
+  <p class="footer-text"><span>נויה אלפי</span> © 2025 — כל הזכויות שמורות</p>
+</footer>
+
+</body>
+</html>
