@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>נויה אלפי | יוצרת תוכן · צלמת · עורכת וידאו</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ══ RESET & BASE ══ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'Heebo', sans-serif;
+      direction: rtl;
+      text-align: right;
+      line-height: 1.65;
+      color: var(--dark);
+      background: var(--bg);
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    button { font-family: 'Heebo', sans-serif; cursor: pointer; border: none; outline: none; }
+
+    /* ══ DESIGN TOKENS ══ */
+    :root {
+      --bg:         #FEF8FB;
+      --white:      #FFFFFF;
+      --pink-0:     #FFF2F7;
+      --pink-1:     #FDDEED;
+      --pink-2:     #F5B8D2;
+      --pink-3:     #E0879F;
+      --brand:      #C0607E;
+      --brand-dark: #9E4A65;
+      --dark:       #3A1828;
+      --mid:        #6D3F52;
+      --light:      #A8849A;
+      --border:     #F0CEDC;
+      --shadow-sm:  0 2px 12px rgba(192,96,126,.10);
+      --shadow-md:  0 6px 28px rgba(192,96,126,.15);
+      --shadow-lg:  0 16px 56px rgba(192,96,126,.20);
+      --r-sm: 14px;
+      --r-md: 22px;
+      --r-lg: 32px;
+      --r-xl: 44px;
+    }
+
+    /* ══ ANIMATIONS ══ */
+    @keyframes fadeUp   { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fadeIn   { from { opacity:0; } to { opacity:1; } }
+    @keyframes float    { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-10px); } }
+    @keyframes shimmer  { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+    @keyframes pulse    { 0%,100% { transform:scale(1); } 50% { transform:scale(1.04); } }
+
+    .anim-up   { animation: fadeUp  .7s ease both; }
+    .anim-d1   { animation-delay: .1s; }
+    .anim-d2   { animation-delay: .2s; }
+    .anim-d3   { animation-delay: .3s; }
+    .anim-d4   { animation-delay: .4s; }
+    .anim-d5   { animation-delay: .5s; }
+
+    /* ══ NAV ══ */
+    .nav {
+      position: fixed; top: 0; inset-inline: 0;
+      z-index: 999;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 14px 6%;
+      background: rgba(254,248,251,.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow .3s;
+    }
+    .nav.scrolled { box-shadow: var(--shadow-sm); }
+    .nav-logo { font-size: 1.1rem; font-weight: 800; letter-spacing: -.3px; }
+    .nav-logo span { color: var(--brand); }
+    .nav-cta {
+      background: var(--brand);
+      color: #fff;
+      padding: 10px 22px;
+      border-radius: 50px;
+      font-size: .875rem;
+      font-weight: 700;
+      transition: all .25s;
+    }
+    .nav-cta:hover { background: var(--brand-dark); transform: translateY(-1px); box-shadow: 0 4px 18px rgba(192,96,126,.35); }
+
+    /* ══ SECTION WRAPPER ══ */
+    .sec { padding: 88px 6%; }
+    .sec-narrow { max-width: 860px; margin-inline: auto; }
+    .sec-wide   { max-width: 1140px; margin-inline: auto; }
+
+    .sec-eyebrow {
+      display: inline-block;
+      background: var(--pink-1);
+      color: var(--brand);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      padding: 5px 16px;
+      border-radius: 50px;
+      margin-bottom: 14px;
+    }
+    .sec-title {
+      font-size: clamp(1.75rem, 4vw, 2.8rem);
+      font-weight: 900;
+      line-height: 1.15;
+      letter-spacing: -.5px;
+      color: var(--dark);
+    }
+    .sec-sub {
+      font-size: 1.02rem;
+      color: var(--mid);
+      margin-top: 12px;
+      line-height: 1.75;
+      max-width: 600px;
+    }
+    .sec-hd-center { text-align: center; margin-bottom: 56px; }
+    .sec-hd-center .sec-sub { margin-inline: auto; }
+
+    /* ══ BUTTONS ══ */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 14px 30px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 700;
+      transition: all .25s;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--brand);
+      color: #fff;
+      box-shadow: 0 6px 24px rgba(192,96,126,.3);
+    }
+    .btn-primary:hover { background: var(--brand-dark); transform: translateY(-2px); box-shadow: 0 10px 36px rgba(192,96,126,.4); }
+    .btn-outline {
+      background: transparent;
+      color: var(--brand);
+      border: 2px solid var(--brand);
+    }
+    .btn-outline:hover { background: var(--brand); color: #fff; transform: translateY(-2px); }
+    .btn-white {
+      background: #fff;
+      color: var(--brand);
+      box-shadow: var(--shadow-md);
+    }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+    .btn-lg { padding: 17px 40px; font-size: 1.1rem; }
+
+    /* ══ HERO ══ */
+    .hero {
+      min-height: 100vh;
+      padding: 120px 6% 80px;
+      background: linear-gradient(150deg, var(--bg) 0%, var(--pink-0) 55%, #FEF2F6 100%);
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--pink-1);
+      color: var(--brand);
+      font-size: .8rem; font-weight: 700;
+      padding: 8px 20px; border-radius: 50px;
+      margin-bottom: 22px;
+    }
+    .hero-h1 {
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 900;
+      line-height: 1.12;
+      letter-spacing: -.8px;
+      color: var(--dark);
+      margin-bottom: 18px;
+    }
+    .hero-h1 em { font-style: normal; color: var(--brand); }
+    .hero-lead {
+      font-size: clamp(.95rem, 1.6vw, 1.15rem);
+      color: var(--mid);
+      line-height: 1.75;
+      margin-bottom: 32px;
+      max-width: 520px;
+    }
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 36px;
+      max-width: 400px;
+    }
+    .hstat {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      padding: 16px 18px;
+      box-shadow: var(--shadow-sm);
+    }
+    .hstat-n { font-size: 1.7rem; font-weight: 900; color: var(--brand); line-height: 1; }
+    .hstat-l { font-size: .75rem; color: var(--light); font-weight: 600; margin-top: 4px; }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .hero-visual { position: relative; display: flex; justify-content: center; }
+    .hero-photo-frame {
+      position: relative;
+      width: 100%; max-width: 400px;
+      border-radius: var(--r-xl);
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      background: var(--pink-1);
+      box-shadow: var(--shadow-lg);
+    }
+    .hero-photo-frame img { width:100%; height:100%; object-fit:cover; object-position:top; }
+    .hero-photo-frame .ph {
+      width:100%; height:100%;
+      display:flex; align-items:center; justify-content:center;
+      background: linear-gradient(160deg, var(--pink-1), var(--pink-0));
+      color: var(--pink-2); font-size: 5rem;
+    }
+    .hero-badge {
+      position: absolute;
+      background: #fff;
+      border-radius: 18px;
+      padding: 12px 18px;
+      box-shadow: var(--shadow-md);
+      display: flex; align-items: center; gap: 10px;
+      animation: float 3.5s ease-in-out infinite;
+    }
+    .hero-badge.b1 { bottom: 30px; right: -20px; }
+    .hero-badge.b2 { top: 40px; left: -20px; }
+    .badge-n { font-size: 1.3rem; font-weight: 900; color: var(--brand); line-height: 1; }
+    .badge-l { font-size: .68rem; color: var(--light); font-weight: 600; }
+    .badge-ico { font-size: 1.6rem; }
+
+    /* ══ STATS BAR ══ */
+    .statsbar {
+      background: var(--dark);
+      padding: 36px 6%;
+    }
+    .statsbar-inner {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      max-width: 900px;
+      margin-inline: auto;
+      gap: 0;
+    }
+    .sbar-item {
+      text-align: center;
+      padding: 12px;
+      border-left: 1px solid rgba(255,255,255,.1);
+    }
+    .sbar-item:last-child { border: none; }
+    .sbar-n { font-size: clamp(1.8rem,3.5vw,2.6rem); font-weight: 900; color: var(--pink-2); line-height: 1; }
+    .sbar-l { font-size: .78rem; color: rgba(255,255,255,.55); margin-top: 6px; font-weight: 500; }
+
+    /* ══ WHY ME ══ */
+    .why { background: var(--white); }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 20px;
+      max-width: 900px;
+      margin-inline: auto;
+    }
+    .why-card {
+      background: var(--pink-0);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      padding: 30px 26px;
+      display: flex; gap: 18px;
+      transition: all .3s;
+    }
+    .why-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); background: var(--white); }
+    .why-ico { font-size: 2.2rem; min-width: 44px; line-height: 1; }
+    .why-t { font-size: 1.05rem; font-weight: 800; color: var(--dark); margin-bottom: 8px; }
+    .why-d { font-size: .9rem; color: var(--mid); line-height: 1.7; }
+
+    /* ══ BENEFITS ══ */
+    .benefits { background: var(--pink-0); }
+    .benefits-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      max-width: 1000px;
+      margin-inline: auto;
+    }
+    .benefits-img {
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      aspect-ratio: 4/5;
+      background: var(--pink-1);
+      box-shadow: var(--shadow-md);
+    }
+    .benefits-img img { width:100%; height:100%; object-fit:cover; object-position:top; }
+    .benefits-img .ph {
+      width:100%; height:100%;
+      display:flex; align-items:center; justify-content:center;
+      color:var(--pink-2); font-size:4rem;
+    }
+    .benefits-list { display: flex; flex-direction: column; gap: 16px; }
+    .benefit-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 16px 20px;
+      background: var(--white);
+      border-radius: var(--r-sm);
+      border: 1px solid var(--border);
+      transition: all .25s;
+    }
+    .benefit-item:hover { border-color: var(--pink-2); transform: translateX(-4px); }
+    .benefit-check {
+      width: 26px; height: 26px; min-width: 26px;
+      background: var(--pink-1);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--brand);
+      font-size: .9rem;
+      font-weight: 900;
+    }
+    .benefit-text { font-size: .95rem; font-weight: 600; color: var(--dark); line-height: 1.4; }
+
+    /* ══ ABOUT ══ */
+    .about { background: var(--white); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 64px;
+      align-items: center;
+      max-width: 1060px;
+      margin-inline: auto;
+    }
+    .about-img-wrap { position: relative; }
+    .about-img-frame {
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      aspect-ratio: 4/5;
+      background: var(--pink-1);
+      box-shadow: var(--shadow-md);
+    }
+    .about-img-frame img { width:100%; height:100%; object-fit:cover; object-position:top; }
+    .about-img-frame .ph {
+      width:100%; height:100%;
+      display:flex; align-items:center; justify-content:center;
+      color:var(--pink-2); font-size:4rem;
+    }
+    .about-deco {
+      position: absolute; bottom:-16px; left:-16px;
+      width:80px; height:80px;
+      border-radius:50%;
+      background: var(--pink-1);
+      z-index:-1;
+    }
+    .about-text .sec-title { margin-bottom: 20px; }
+    .about-text p { font-size: 1.02rem; color: var(--mid); margin-bottom: 16px; line-height: 1.8; }
+    .about-text p strong { color: var(--dark); font-weight: 700; }
+    .about-cta-row { display: flex; gap: 14px; margin-top: 28px; flex-wrap: wrap; }
+
+    /* ══ SERVICES ══ */
+    .services { background: var(--pink-0); }
+    .srv-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 22px;
+      max-width: 1060px;
+      margin-inline: auto;
+    }
+    .srv-card {
+      background: var(--white);
+      border-radius: var(--r-md);
+      padding: 36px 28px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+      transition: all .3s;
+    }
+    .srv-card::before {
+      content:'';
+      position:absolute; top:0; inset-inline:0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--brand), var(--pink-2));
+    }
+    .srv-card:hover { transform: translateY(-7px); box-shadow: var(--shadow-lg); }
+    .srv-ico { font-size: 2.6rem; margin-bottom: 18px; display: block; }
+    .srv-t { font-size: 1.15rem; font-weight: 900; color: var(--dark); margin-bottom: 12px; }
+    .srv-d { font-size: .92rem; color: var(--mid); line-height: 1.72; }
+    .srv-tag {
+      display: inline-block;
+      margin-top: 18px;
+      background: var(--pink-1);
+      color: var(--brand);
+      font-size: .73rem;
+      font-weight: 800;
+      padding: 5px 14px;
+      border-radius: 50px;
+    }
+
+    /* ══ RESULTS / VIDEOS ══ */
+    .results { background: var(--dark); }
+    .results .sec-title { color: var(--white); }
+    .results .sec-sub  { color: rgba(255,255,255,.55); }
+    .results .sec-eyebrow { background: rgba(255,255,255,.1); color: var(--pink-2); }
+
+    .vid-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 16px;
+      max-width: 860px;
+      margin-inline: auto;
+    }
+    .vid-cell {
+      position: relative;
+      aspect-ratio: 9/16;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #2a1520;
+      cursor: pointer;
+    }
+    .vid-cell img { width:100%; height:100%; object-fit:cover; object-position:top; display:block; transition:transform .4s; }
+    .vid-cell:hover img { transform:scale(1.05); }
+    .vid-overlay { position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,.78) 0%, transparent 50%); }
+    .play-btn {
+      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+      width:46px; height:46px; border-radius:50%;
+      background:rgba(255,255,255,.18); border:1.5px solid rgba(255,255,255,.35);
+      display:flex; align-items:center; justify-content:center;
+      color:#fff; font-size:1.1rem;
+      backdrop-filter:blur(4px);
+      transition:all .25s;
+    }
+    .vid-cell:hover .play-btn { background:var(--brand); border-color:var(--brand); transform:translate(-50%,-50%) scale(1.1); }
+    .vc-wrap { position:absolute; bottom:14px; right:12px; }
+    .vc-inner { position:relative; display:inline-block; }
+    .vc-num {
+      font-size:.82rem; font-weight:900; color:#fff; position:relative; z-index:2;
+      display:flex; align-items:center; gap:4px;
+      text-shadow:0 1px 4px rgba(0,0,0,.6);
+    }
+    .vc-num::before { content:"▶"; font-size:.58rem; opacity:.85; }
+    .vc-ring {
+      position:absolute; top:50%; left:50%;
+      transform:translate(-50%,-50%);
+      pointer-events:none;
+    }
+    .results-note {
+      text-align:center; margin-top:36px;
+      font-size:.82rem; color:rgba(255,255,255,.4);
+      font-style:italic;
+    }
+    .results-cta { text-align:center; margin-top:30px; }
+
+    /* ══ TESTIMONIALS ══ */
+    .testimonials { background: var(--pink-0); }
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 22px;
+      max-width: 1060px;
+      margin-inline: auto;
+    }
+    .testi-card {
+      background: var(--white);
+      border-radius: var(--r-md);
+      padding: 30px 26px;
+      box-shadow: var(--shadow-sm);
+      transition: all .3s;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .testi-card:hover { transform:translateY(-5px); box-shadow:var(--shadow-md); }
+    .testi-stars { color: #F9C74F; font-size: 1rem; letter-spacing: 2px; }
+    .testi-quote { font-size:.96rem; color:var(--mid); line-height:1.75; font-style:italic; flex:1; }
+    .testi-quote::before { content:'"'; color:var(--pink-2); font-size:2rem; line-height:0; vertical-align:-.5em; margin-left:4px; }
+    .testi-author { display:flex; align-items:center; gap:12px; padding-top:14px; border-top:1px solid var(--border); }
+    .testi-avatar {
+      width:44px; height:44px; border-radius:50%;
+      background:var(--pink-1);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.3rem; overflow:hidden; flex-shrink:0;
+    }
+    .testi-avatar img { width:100%; height:100%; object-fit:cover; }
+    .testi-name { font-size:.9rem; font-weight:800; color:var(--dark); }
+    .testi-biz  { font-size:.78rem; color:var(--light); font-weight:500; }
+
+    /* ══ BRANDS ══ */
+    .brands { background: var(--white); }
+    .brands-wall {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      max-width: 960px;
+      margin-inline: auto;
+    }
+    .brand-pill {
+      background: var(--pink-0);
+      border: 1.5px solid var(--border);
+      color: var(--dark);
+      padding: 9px 20px;
+      border-radius: 50px;
+      font-size: .82rem;
+      font-weight: 700;
+      white-space: nowrap;
+      transition: all .2s;
+    }
+    .brand-pill:hover { background:var(--brand); color:#fff; border-color:var(--brand); transform:translateY(-2px); box-shadow:var(--shadow-sm); }
+    .brand-pill.lg { font-size:.92rem; padding:11px 24px; }
+
+    /* ══ PROCESS ══ */
+    .process { background: var(--pink-0); }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(5,1fr);
+      gap: 12px;
+      max-width: 1060px;
+      margin-inline: auto;
+      position: relative;
+    }
+    .steps::before {
+      content:'';
+      position:absolute;
+      top:32px; right:10%; left:10%;
+      height:2px;
+      background:var(--border);
+      z-index:0;
+    }
+    .step {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .step-num {
+      width:64px; height:64px; border-radius:50%;
+      background:var(--white);
+      border:2px solid var(--border);
+      display:flex; align-items:center; justify-content:center;
+      margin: 0 auto 16px;
+      font-size:1.3rem; font-weight:900; color:var(--brand);
+      box-shadow:var(--shadow-sm);
+      transition:all .3s;
+    }
+    .step:hover .step-num { background:var(--brand); color:#fff; border-color:var(--brand); transform:scale(1.1); }
+    .step-t { font-size:.9rem; font-weight:800; color:var(--dark); margin-bottom:6px; }
+    .step-d { font-size:.78rem; color:var(--mid); line-height:1.6; }
+
+    /* ══ FAQ ══ */
+    .faq { background: var(--white); }
+    .faq-list {
+      max-width: 760px;
+      margin-inline: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .faq-item { border-radius: var(--r-sm); border: 1.5px solid var(--border); overflow:hidden; }
+    .faq-q {
+      width:100%; text-align:right; direction:rtl;
+      background:var(--white);
+      padding:18px 22px;
+      font-size:1rem; font-weight:700; color:var(--dark);
+      display:flex; justify-content:space-between; align-items:center;
+      cursor:pointer;
+      transition:background .2s;
+    }
+    .faq-q:hover { background:var(--pink-0); }
+    .faq-arrow { color:var(--brand); font-size:1.2rem; transition:transform .3s; flex-shrink:0; margin-right:12px; }
+    .faq-item.open .faq-arrow { transform:rotate(180deg); }
+    .faq-a {
+      max-height:0; overflow:hidden;
+      transition:max-height .35s ease, padding .3s;
+      padding:0 22px;
+      font-size:.94rem; color:var(--mid); line-height:1.75;
+    }
+    .faq-item.open .faq-a { max-height:200px; padding:0 22px 18px; }
+
+    /* ══ FINAL CTA ══ */
+    .finalcta {
+      background: linear-gradient(135deg, var(--brand) 0%, #9E4A65 100%);
+      padding: 88px 6%;
+      text-align: center;
+    }
+    .finalcta-t {
+      font-size: clamp(1.8rem,4vw,2.8rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .finalcta-sub {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,.78);
+      margin-bottom: 36px;
+      max-width: 520px;
+      margin-inline: auto;
+    }
+
+    /* ══ CONTACT FORM ══ */
+    .contact { background: var(--bg); }
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 64px;
+      align-items: start;
+      max-width: 1020px;
+      margin-inline: auto;
+    }
+    .contact-info .sec-title { margin-bottom: 16px; }
+    .contact-info p { font-size:1rem; color:var(--mid); margin-bottom:28px; line-height:1.75; }
+    .contact-links { display:flex; flex-direction:column; gap:12px; }
+    .clink {
+      display:flex; align-items:center; gap:12px;
+      padding:14px 18px;
+      background:var(--white);
+      border:1.5px solid var(--border);
+      border-radius:14px;
+      font-size:.9rem; font-weight:600; color:var(--dark);
+      transition:all .2s;
+    }
+    .clink:hover { border-color:var(--brand); color:var(--brand); transform:translateX(-4px); }
+    .clink-ico { font-size:1.3rem; }
+
+    .form-box {
+      background: var(--white);
+      border-radius: var(--r-md);
+      padding: 42px;
+      box-shadow: var(--shadow-md);
+    }
+    .form-row { margin-bottom: 16px; }
+    .form-label { display:block; font-size:.84rem; font-weight:700; margin-bottom:7px; color:var(--dark); }
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width:100%;
+      padding:13px 16px;
+      border:1.5px solid var(--border);
+      border-radius:12px;
+      font-family:'Heebo',sans-serif;
+      font-size:.92rem;
+      color:var(--dark);
+      background:var(--bg);
+      direction:rtl;
+      outline:none;
+      transition:border-color .2s;
+    }
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus { border-color:var(--brand); }
+    .form-textarea { height:110px; resize:vertical; }
+    .form-submit {
+      width:100%;
+      background:var(--brand);
+      color:#fff;
+      padding:16px;
+      border-radius:50px;
+      font-size:1rem;
+      font-weight:800;
+      margin-top:8px;
+      box-shadow:0 6px 24px rgba(192,96,126,.3);
+      transition:all .25s;
+    }
+    .form-submit:hover { background:var(--brand-dark); transform:translateY(-2px); box-shadow:0 10px 36px rgba(192,96,126,.4); }
+
+    /* ══ FOOTER ══ */
+    footer {
+      background:var(--dark);
+      color:rgba(255,255,255,.45);
+      text-align:center;
+      padding:28px;
+      font-size:.82rem;
+    }
+    footer strong { color:rgba(255,255,255,.8); }
+
+    /* ══ RESPONSIVE ══ */
+    @media (max-width:1000px) {
+      .hero { grid-template-columns:1fr; padding:100px 5% 60px; }
+      .hero-visual { order:-1; }
+      .hero-photo-frame { max-width:280px; margin-inline:auto; }
+      .hero-btns, .hero-stats { justify-content:center; }
+      .hero-stats { max-width:100%; grid-template-columns:repeat(2,1fr); }
+      .hero-lead { margin-inline:auto; text-align:center; }
+      .hero-tag { margin-inline:auto; display:flex; }
+      .hero-h1 { text-align:center; }
+      .why-grid { grid-template-columns:1fr; }
+      .benefits-inner { grid-template-columns:1fr; }
+      .benefits-img { max-width:300px; margin-inline:auto; aspect-ratio:1/1; }
+      .about-grid { grid-template-columns:1fr; }
+      .srv-grid { grid-template-columns:1fr; }
+      .testi-grid { grid-template-columns:1fr; }
+      .steps { grid-template-columns:repeat(3,1fr); }
+      .steps::before { display:none; }
+      .contact-wrap { grid-template-columns:1fr; }
+      .statsbar-inner { grid-template-columns:repeat(2,1fr); }
+      .sbar-item { border:none; border-bottom:1px solid rgba(255,255,255,.08); }
+      .sbar-item:nth-child(3), .sbar-item:nth-child(4) { border-bottom:none; }
+    }
+    @media (max-width:600px) {
+      .sec { padding:64px 5%; }
+      .vid-grid { grid-template-columns:repeat(3,1fr); gap:8px; }
+      .steps { grid-template-columns:repeat(2,1fr); }
+      .hero-badge { display:none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-logo">נויה <span>אלפי</span> 💗</div>
+  <a href="#contact" class="nav-cta">לקבלת הצעת מחיר</a>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-tag anim-up">✦ יוצרת תוכן · צלמת · עורכת וידאו</div>
+    <h1 class="hero-h1 anim-up anim-d1">
+      יוצרת תוכן שמביאה<br /><em>צפיות, חשיפה ותוצאות</em><br />לעסקים
+    </h1>
+    <p class="hero-lead anim-up anim-d2">
+      סרטונים שחצו מיליון צפיות אורגניות, שיתופי פעולה עם מותגים מובילים ותוכן שגורם לאנשים לעצור את הגלילה ולהתחיל להתעניין.
+    </p>
+    <div class="hero-stats anim-up anim-d3">
+      <div class="hstat">
+        <div class="hstat-n">688K+</div>
+        <div class="hstat-l">צפיות בסרטון מוביל</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-n">20K+</div>
+        <div class="hstat-l">עוקבים בטיקטוק</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-n">14.1K+</div>
+        <div class="hstat-l">עוקבים באינסטגרם</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-n">1.2M+</div>
+        <div class="hstat-l">סה״כ לייקים</div>
+      </div>
+    </div>
+    <div class="hero-btns anim-up anim-d4">
+      <a href="#contact" class="btn btn-primary btn-lg">לקבלת הצעת מחיר</a>
+      <a href="#results" class="btn btn-outline btn-lg">צפו בעבודות שלי</a>
+    </div>
+  </div>
+
+  <div class="hero-visual anim-up anim-d2">
+    <div class="hero-photo-frame">
+      <img src="images/hero.jpg" alt="נויה אלפי"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+      <div class="ph">📷</div>
+    </div>
+    <div class="hero-badge b1">
+      <div>
+        <div class="badge-n">688K</div>
+        <div class="badge-l">צפיות אורגניות</div>
+      </div>
+      <div class="badge-ico">🔥</div>
+    </div>
+    <div class="hero-badge b2">
+      <div>
+        <div class="badge-n">5+</div>
+        <div class="badge-l">שנות ניסיון</div>
+      </div>
+      <div class="badge-ico">⭐</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ STATS BAR ══ -->
+<div class="statsbar">
+  <div class="statsbar-inner">
+    <div class="sbar-item">
+      <div class="sbar-n">688K+</div>
+      <div class="sbar-l">שיא צפיות בסרטון</div>
+    </div>
+    <div class="sbar-item">
+      <div class="sbar-n">20+</div>
+      <div class="sbar-l">מותגים ועסקים</div>
+    </div>
+    <div class="sbar-item">
+      <div class="sbar-n">5</div>
+      <div class="sbar-l">שנות ניסיון</div>
+    </div>
+    <div class="sbar-item">
+      <div class="sbar-n">1.2M+</div>
+      <div class="sbar-l">לייקים כולל</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ WHY ME ══ -->
+<section class="sec why" id="why">
+  <div class="sec-hd-center sec-narrow">
+    <div class="sec-eyebrow">למה לבחור בי</div>
+    <h2 class="sec-title">למה עסקים בוחרים<br />לעבוד איתי?</h2>
+    <p class="sec-sub">כי תוכן טוב לא מגיע מהברקה — הוא מגיע מניסיון, מהבנה עמוקה של הפלטפורמה ומיכולת עריכה שנבנתה לאורך שנים.</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-ico">🎯</div>
+      <div>
+        <div class="why-t">תוכן שעוצר את הגלילה</div>
+        <div class="why-d">סרטונים שנבנים מתוך הבנה עמוקה של התנהגות משתמשים ברשתות. אני יודעת בדיוק מה גורם לאנשים לעצור, לצפות ולפעול — ואני מיישמת את זה בכל פריים.</div>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-ico">💪</div>
+      <div>
+        <div class="why-t">ניסיון אמיתי בשטח</div>
+        <div class="why-d">יותר מ-5 שנות ניסיון בצילום, עריכה ויצירת תוכן אורגני שנלמד מניסיון ולא מקורס. מאות פרויקטים שמדברים בעד עצמם.</div>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-ico">📊</div>
+      <div>
+        <div class="why-t">תוצאות מדידות</div>
+        <div class="why-d">חשיפה, מעורבות, פניות ומכירות שניתן למדוד בפועל — לא רק "אקספוז'ר". עסקים שעבדו איתי ראו תוצאות שהם לא ציפו אליהן.</div>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-ico">✨</div>
+      <div>
+        <div class="why-t">הכל במקום אחד</div>
+        <div class="why-d">רעיון, צילום, עריכה והפקה מלאה תחת אדם אחד. חוסכת לכם תיאומים, זמן וכסף — ומביאה תוצר שמרגיש אחיד ומקצועי לגמרי.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BENEFITS ══ -->
+<section class="sec benefits">
+  <div class="benefits-inner sec-wide">
+    <div class="benefits-img">
+      <img src="images/photo3.jpg" alt="נויה אלפי"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+      <div class="ph">📸</div>
+    </div>
+    <div>
+      <div class="sec-eyebrow">מה תקבלו</div>
+      <h2 class="sec-title" style="margin-bottom:28px;">מה תקבלו<br />מהעבודה איתי?</h2>
+      <div class="benefits-list">
+        <div class="benefit-item">
+          <div class="benefit-check">✓</div>
+          <div class="benefit-text">תוכן שמחזק את המותג ומייצר זיהוי אמיתי</div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-check">✓</div>
+          <div class="benefit-text">סרטונים שמחזיקים את הצופה עד הסוף — לא רק שניות ראשונות</div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-check">✓</div>
+          <div class="benefit-text">חשיפה אורגנית גבוהה יותר בלי להוציא על פרסום</div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-check">✓</div>
+          <div class="benefit-text">חיסכון בזמן ובהתעסקות — אני מטפלת בכל מה שצריך</div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-check">✓</div>
+          <div class="benefit-text">תוצרים ברמה מקצועית שמוכנים לכל פלטפורמה</div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-check">✓</div>
+          <div class="benefit-text">התאמה אישית מלאה לעסק, לקהל ולמטרה שלכם</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ABOUT ══ -->
+<section class="sec about" id="about">
+  <div class="about-grid sec-wide">
+    <div class="about-img-wrap">
+      <div class="about-img-frame">
+        <img src="images/photo2.jpg" alt="נויה אלפי"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="ph">📸</div>
+      </div>
+      <div class="about-deco"></div>
+    </div>
+    <div class="about-text">
+      <div class="sec-eyebrow">מי אני</div>
+      <h2 class="sec-title">נעים להכיר,<br />אני נויה 👋</h2>
+      <p>
+        אני יוצרת תוכן, צלמת ועורכת וידאו עם <strong>למעלה מ-5 שנות ניסיון</strong> שנבנו מניסיון אמיתי, לא מלימודים תיאורטיים. פיתחתי שפה ויזואלית שמצליחה למשוך תשומת לב וליצור חיבור אמיתי עם הקהל — הדבר שקשה לקנות וחשוב מכל.
+      </p>
+      <p>
+        עבדתי עם מותגים גדולים ועסקים מכל הגדלים — מ-American Eagle ו-L'Oréal ועד עסקים פרטיים שפנו אליי עם מטרה ויצאו עם תוצאות שהפתיעו אותם. <strong>המטרה שלי בכל פרויקט היא אחת</strong> — ליצור תוכן שנראה מעולה ומביא תוצאות.
+      </p>
+      <p>
+        יש לי סרטונים שחצו חצי מיליון ומיליון צפיות בתוכן אורגני לחלוטין. זה לא מזל — זו הבנה של מה הפלטפורמה אוהבת ויכולת לייצר את זה שוב ושוב.
+      </p>
+      <div class="about-cta-row">
+        <a href="#contact" class="btn btn-primary">בואו נדבר על שיתוף פעולה</a>
+        <a href="#results" class="btn btn-outline">תראו את התוצאות שלי</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SERVICES ══ -->
+<section class="sec services" id="services">
+  <div class="sec-hd-center">
+    <div class="sec-eyebrow">שירותים</div>
+    <h2 class="sec-title">איך אני יכולה לעזור לכם?</h2>
+    <p class="sec-sub">כל שיתוף פעולה בנוי בהתאמה מלאה — כי אין שני עסקים זהים.</p>
+  </div>
+  <div class="srv-grid sec-wide">
+    <div class="srv-card">
+      <span class="srv-ico">📱</span>
+      <div class="srv-t">תוכן ממומן ושיתופי פעולה</div>
+      <div class="srv-d">סרטוני TikTok, Reels ו-Stories שנראים אותנטיים כי הם אותנטיים. הקהל שלי סומך עליי — וכשהמותג שלכם מופיע אצלי, הוא מופיע בצורה הנכונה.</div>
+      <span class="srv-tag">TikTok · Reels · Stories</span>
+    </div>
+    <div class="srv-card">
+      <span class="srv-ico">📸</span>
+      <div class="srv-t">צילום מקצועי לעסקים</div>
+      <div class="srv-d">צילום מוצרים, חללים ותדמית עסקית עם מצלמה מקצועית ועין שמבינה מה עובד ויזואלית. תמונות מוכנות לאתר, לפרסומות ולסושיאל.</div>
+      <span class="srv-tag">מוצרים · חלל · תדמית</span>
+    </div>
+    <div class="srv-card">
+      <span class="srv-ico">🎬</span>
+      <div class="srv-t">עריכת וידאו והפקת תוכן</div>
+      <div class="srv-d">מעריכה בלבד ועד הפקה מלאה — קונספט, צילום, עריכה, מוסיקה. יש לכם חומרים? אני לוקחת אותם ועושה מהם תוכן שמרשים. 5 שנות עריכה שנרכשו מניסיון.</div>
+      <span class="srv-tag">עריכה · הפקה · Reels</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ RESULTS ══ -->
+<section class="sec results" id="results">
+  <div class="sec-hd-center">
+    <div class="sec-eyebrow">תוצאות</div>
+    <h2 class="sec-title">תוצאות שמדברות<br />בעד עצמן</h2>
+    <p class="sec-sub">סרטונים שחצו חצי מיליון ומיליון צפיות — בתוכן אורגני בלבד, ללא קידום ממומן.</p>
+  </div>
+
+  <div class="vid-grid">
+    <div class="vid-cell">
+      <img src="images/tiktok-screen3.jpg" alt="688.7K"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+      <div style="display:none;width:100%;height:100%;background:linear-gradient(160deg,#2a1520,#150d10);align-items:center;justify-content:center;color:#555;font-size:2rem;">▶</div>
+      <div class="vid-overlay"></div>
+      <div class="play-btn">▶</div>
+      <div class="vc-wrap"><div class="vc-inner">
+        <div class="vc-num">688.7K</div>
+        <svg class="vc-ring" width="82" height="34" viewBox="0 0 82 34">
+          <ellipse cx="41" cy="17" rx="37" ry="14" fill="none" stroke="#C0607E" stroke-width="3" transform="rotate(-3,41,17)" style="filter:drop-shadow(0 0 4px rgba(192,96,126,.8))"/>
+        </svg>
+      </div></div>
+    </div>
+    <div class="vid-cell">
+      <img src="images/tiktok-screen3.jpg" alt="674.8K"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+      <div style="display:none;width:100%;height:100%;background:linear-gradient(160deg,#2a1520,#150d10);align-items:center;justify-content:center;color:#555;font-size:2rem;">▶</div>
+      <div class="vid-overlay"></div>
+      <div class="play-btn">▶</div>
+      <div class="vc-wrap"><div class="vc-inner">
+        <div class="vc-num">674.8K</div>
+        <svg class="vc-ring" width="82" height="34" viewBox="0 0 82 34">
+          <ellipse cx="41" cy="17" rx="37" ry="14" fill="none" stroke="#C0607E" stroke-width="3" transform="rotate(2,41,17)" style="filter:drop-shadow(0 0 4px rgba(192,96,126,.8))"/>
+        </svg>
+      </div></div>
+    </div>
+    <div class="vid-cell">
+      <img src="images/tiktok-screen2.jpg" alt="619.9K"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+      <div style="display:none;width:100%;height:100%;background:linear-gradient(160deg,#2a1520,#150d10);align-items:center;justify-content:center;color:#555;font-size:2rem;">▶</div>
+      <div class="vid-overlay"></div>
+      <div class="play-btn">▶</div>
+      <div class="vc-wrap"><div class="vc-inner">
+        <div class="vc-num">619.9K</div>
+        <svg class="vc-ring" width="82" height="34" viewBox="0 0 82 34">
+          <ellipse cx="41" cy="17" rx="37" ry="14" fill="none" stroke="#C0607E" stroke-width="3" transform="rotate(-2,41,17)" style="filter:drop-shadow(0 0 4px rgba(192,96,126,.8))"/>
+        </svg>
+      </div></div>
+    </div>
+    <div class="vid-cell">
+      <img src="images/tiktok-screen3.jpg" alt="243.6K"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+      <div style="display:none;width:100%;height:100%;background:linear-gradient(160deg,#2a1520,#150d10);align-items:center;justify-content:center;color:#555;font-size:2rem;">▶</div>
+      <div class="vid-overlay"></div>
+      <div class="play-btn">▶</div>
+      <div class="vc-wrap"><div class="vc-inner">
+        <div class="vc-num">243.6K</div>
+        <svg class="vc-ring" width="78" height="34" viewBox="0 0 78 34">
+          <ellipse cx="39" cy="17" rx="35" ry="14" fill="none" stroke="#C0607E" stroke-width="3" transform="rotate(1,39,17)" style="filter:drop-shadow(0 0 4px rgba(192,96,126,.8))"/>
+        </svg>
+      </div></div>
+    </div>
+    <div class="vid-cell">
+      <img src="images/tiktok-screen3.jpg" alt="108.4K"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+      <div style="display:none;width:100%;height:100%;background:linear-gradient(160deg,#2a1520,#150d10);align-items:center;justify-content:center;color:#555;font-size:2rem;">▶</div>
+      <div class="vid-overlay"></div>
+      <div class="play-btn">▶</div>
+      <div class="vc-wrap"><div class="vc-inner">
+        <div class="vc-num">108.4K</div>
+        <svg class="vc-ring" width="78" height="34" viewBox="0 0 78 34">
+          <ellipse cx="39" cy="17" rx="35" ry="14" fill="none" stroke="#C0607E" stroke-width="3" transform="rotate(-1,39,17)" style="filter:drop-shadow(0 0 4px rgba(192,96,126,.8))"/>
+        </svg>
+      </div></div>
+    </div>
+    <div class="vid-cell">
+      <img src="images/tiktok-screen1.jpg" alt="92.8K"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+      <div style="display:none;width:100%;height:100%;background:linear-gradient(160deg,#2a1520,#150d10);align-items:center;justify-content:center;color:#555;font-size:2rem;">▶</div>
+      <div class="vid-overlay"></div>
+      <div class="play-btn">▶</div>
+      <div class="vc-wrap"><div class="vc-inner">
+        <div class="vc-num">92.8K</div>
+        <svg class="vc-ring" width="70" height="30" viewBox="0 0 70 30">
+          <ellipse cx="35" cy="15" rx="31" ry="12" fill="none" stroke="#C0607E" stroke-width="3" transform="rotate(3,35,15)" style="filter:drop-shadow(0 0 4px rgba(192,96,126,.8))"/>
+        </svg>
+      </div></div>
+    </div>
+  </div>
+
+  <p class="results-note">כל הנתונים מוצגים מצפיות אורגניות בלבד, ללא קידום ממומן.</p>
+  <div class="results-cta">
+    <a href="https://www.tiktok.com/@noyaaaaa.a?_r=1&_t=ZS-96zA6pg2TrM" target="_blank" class="btn btn-white">
+      🎵 לכל הסרטונים בטיקטוק
+    </a>
+  </div>
+</section>
+
+<!-- ══ TESTIMONIALS ══ -->
+<section class="sec testimonials" id="testimonials">
+  <div class="sec-hd-center">
+    <div class="sec-eyebrow">המלצות</div>
+    <h2 class="sec-title">מה הלקוחות אומרים</h2>
+    <p class="sec-sub">בסוף, המלצה אמיתית שווה יותר מכל מספר.</p>
+  </div>
+  <div class="testi-grid sec-wide">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote">הסרטון שנויה יצרה עבורנו הביא חשיפה שלא קיבלנו חודשים קודם. היא הבינה את המותג שלנו מהרגע הראשון ועשתה תוכן שהרגיש טבעי לגמרי.</div>
+      <div class="testi-author">
+        <div class="testi-avatar">👩</div>
+        <div>
+          <div class="testi-name">שירה כ.</div>
+          <div class="testi-biz">מנהלת שיווק</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote">הרגשנו שיש מישהי שמבינה את המותג שלנו באמת. לא עוד יוצרת שמקריאה טקסט — נויה הביאה עצמה לתוכן ויצרה חיבור אמיתי עם הקהל שלנו.</div>
+      <div class="testi-author">
+        <div class="testi-avatar">👨</div>
+        <div>
+          <div class="testi-name">אביב מ.</div>
+          <div class="testi-biz">בעל עסק</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote">מקצועיות, אמינות ותוצאות — זה מה שקיבלנו. הסרטון הגיע לעשרות אלפי צפיות אורגניות ועדיין מביא לנו פניות חדשות.</div>
+      <div class="testi-author">
+        <div class="testi-avatar">👩</div>
+        <div>
+          <div class="testi-name">מיה ל.</div>
+          <div class="testi-biz">מנהלת מדיה חברתית</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BRANDS ══ -->
+<section class="sec brands" id="brands">
+  <div class="sec-hd-center">
+    <div class="sec-eyebrow">מותגים</div>
+    <h2 class="sec-title">מותגים שבחרו לעבוד איתי</h2>
+    <p class="sec-sub">מקבוצת L'Oréal ועד עסקים פרטיים — כולם קיבלו תוכן שעבד.</p>
+  </div>
+  <div class="brands-wall">
+    <span class="brand-pill lg">AMERICAN EAGLE</span>
+    <span class="brand-pill lg">L'ORÉAL PARIS</span>
+    <span class="brand-pill lg">LANCÔME</span>
+    <span class="brand-pill lg">MAYBELLINE</span>
+    <span class="brand-pill lg">BILLABONG</span>
+    <span class="brand-pill">NYX PROFESSIONAL</span>
+    <span class="brand-pill">ATLAS HOTELS</span>
+    <span class="brand-pill">FLYING TIGER</span>
+    <span class="brand-pill">Nestlé</span>
+    <span class="brand-pill">:story</span>
+    <span class="brand-pill">PITMASTER</span>
+    <span class="brand-pill">T-LAB</span>
+    <span class="brand-pill">Airalo</span>
+    <span class="brand-pill">NAYA BEACH</span>
+    <span class="brand-pill">המרקכלין</span>
+    <span class="brand-pill">חנות הוורדה</span>
+    <span class="brand-pill">sayeret.co.il</span>
+    <span class="brand-pill">MAYER HOUSE</span>
+    <span class="brand-pill">BY14</span>
+    <span class="brand-pill">PIEDRA</span>
+    <span class="brand-pill">המון</span>
+    <span class="brand-pill">הסטוק</span>
+  </div>
+</section>
+
+<!-- ══ PROCESS ══ -->
+<section class="sec process" id="process">
+  <div class="sec-hd-center">
+    <div class="sec-eyebrow">תהליך עבודה</div>
+    <h2 class="sec-title">איך נראה תהליך העבודה?</h2>
+    <p class="sec-sub">פשוט, ברור ונעים — בלי בירוקרטיה ובלי הפתעות.</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-t">שיחת היכרות</div>
+      <div class="step-d">מבינים את המטרות, הקהל והציפיות שלכם.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-t">קונספט ורעיון</div>
+      <div class="step-d">בונים יחד את הרעיון והכיוון הויזואלי.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-t">צילום והפקה</div>
+      <div class="step-d">מגיעים, מצלמים ויוצרים — בצורה הכי מקצועית.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-t">עריכה מקצועית</div>
+      <div class="step-d">כותבים, עורכים, מוסיקה ואפקטים — הכל.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-t">אישור והגשה</div>
+      <div class="step-d">אישור סופי ותוצר מוכן לפרסום בכל הפלטפורמות.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FAQ ══ -->
+<section class="sec faq" id="faq">
+  <div class="sec-hd-center sec-narrow">
+    <div class="sec-eyebrow">שאלות נפוצות</div>
+    <h2 class="sec-title">שאלות נפוצות</h2>
+  </div>
+  <div class="faq-list sec-narrow">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>כמה זמן לוקח פרויקט?</span>
+        <span class="faq-arrow">⌄</span>
+      </button>
+      <div class="faq-a">תלוי בסוג הפרויקט — סרטון קצר לסושיאל לרוב מוכן תוך 3-5 ימי עסקים. פרויקט תדמית מלא עם צילום ועריכה יכול לקחת 1-2 שבועות. בכל מקרה נקבע לוח זמנים ברור מראש.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>האם ניתן להזמין רק עריכה?</span>
+        <span class="faq-arrow">⌄</span>
+      </button>
+      <div class="faq-a">בהחלט! אם יש לכם חומרי גלם שצולמו כבר, אני יכולה לקחת אותם ולערוך לסרטון מקצועי. זה אחד השירותים הנפוצים ביותר שלי — עריכה לבד, ללא שלב הצילום.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>האם עובדים עם עסקים קטנים?</span>
+        <span class="faq-arrow">⌄</span>
+      </button>
+      <div class="faq-a">כן, בהחלט. חלק גדול מהלקוחות שלי הם עסקים קטנים ובינוניים. לכל עסק יש פוטנציאל ויראלי — הגודל לא קובע, התוכן קובע.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>האם ניתן לקבל מספר סרטונים?</span>
+        <span class="faq-arrow">⌄</span>
+      </button>
+      <div class="faq-a">כן! יש חבילות לפרויקטים חוזרים עם מספר סרטונים לאורך זמן. זה גם הכי משתלם — ככל שהעבודה יותר רציפה, התוכן יותר אחיד ואפקטיבי.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>מה עלות השירות?</span>
+        <span class="faq-arrow">⌄</span>
+      </button>
+      <div class="faq-a">העלות תלויה בסוג השירות, היקף הפרויקט והמורכבות שלו. מלאו את הטופס בתחתית הדף ואחזור אליכם עם הצעת מחיר מותאמת תוך 24 שעות.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FINAL CTA ══ -->
+<section class="finalcta">
+  <div class="sec-narrow" style="text-align:center;">
+    <h2 class="finalcta-t">מוכנים ליצור תוכן שאנשים<br />באמת עוצרים בשבילו?</h2>
+    <p class="finalcta-sub">ספרו לי על העסק שלכם ואחזור אליכם תוך 24 שעות.</p>
+    <a href="#contact" class="btn btn-white btn-lg">בואו נדבר 💗</a>
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section class="sec contact" id="contact">
+  <div class="contact-wrap">
+    <div class="contact-info">
+      <div class="sec-eyebrow">צרו קשר</div>
+      <h2 class="sec-title">בואו נתחיל<br />משהו טוב 🤝</h2>
+      <p>מלאו את הטופס ואחזור אליכם תוך 24 שעות. כל פנייה מקבלת ממני התייחסות אישית — אין כאן תבניות, יש כאן שיחה אמיתית.</p>
+      <div class="contact-links">
+        <a href="mailto:noyaalfi@gmail.com" class="clink">
+          <span class="clink-ico">📧</span>noyaalfi@gmail.com
+        </a>
+        <a href="https://www.tiktok.com/@noyaaaaa.a?_r=1&_t=ZS-96zA6pg2TrM" target="_blank" class="clink">
+          <span class="clink-ico">🎵</span>TikTok: @noyaaaaa.a
+        </a>
+        <a href="https://www.instagram.com/noya_alfi?igsh=NWVpdjdid2Yzcjdn&utm_source=qr" target="_blank" class="clink">
+          <span class="clink-ico">📸</span>Instagram: @noya_alfi
+        </a>
+      </div>
+    </div>
+
+    <div class="form-box">
+      <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="contact" />
+        <input type="hidden" name="subject" value="פנייה חדשה מדף הנחיתה 💗" />
+        <p style="display:none;"><input name="bot-field" /></p>
+
+        <div class="form-row">
+          <label class="form-label">שם מלא</label>
+          <input class="form-input" type="text" name="שם" placeholder="השם שלך" required />
+        </div>
+        <div class="form-row">
+          <label class="form-label">שם העסק</label>
+          <input class="form-input" type="text" name="עסק" placeholder="שם העסק שלך" required />
+        </div>
+        <div class="form-row">
+          <label class="form-label">טלפון</label>
+          <input class="form-input" type="tel" name="טלפון" placeholder="050-0000000" />
+        </div>
+        <div class="form-row">
+          <label class="form-label">אימייל</label>
+          <input class="form-input" type="email" name="אימייל" placeholder="your@email.com" required />
+        </div>
+        <div class="form-row">
+          <label class="form-label">סוג השירות</label>
+          <select class="form-select" name="סוג שירות">
+            <option value="">בחרו סוג שירות</option>
+            <option>שיתוף פעולה ממומן — TikTok ו-Reels</option>
+            <option>צילום מקצועי לעסק</option>
+            <option>עריכת וידאו בלבד</option>
+            <option>הפקת תוכן מלאה</option>
+            <option>פרויקט משולב</option>
+            <option>אחר</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label class="form-label">ספרו לי עוד</label>
+          <textarea class="form-textarea" name="הודעה" placeholder="פרטים על העסק, המטרה, הציפיות..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">שלחו לי הודעה ✉️</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <strong>נויה אלפי</strong> — יוצרת תוכן · צלמת · עורכת וידאו &nbsp;|&nbsp; © 2025 כל הזכויות שמורות
+</footer>
+
+<script>
+  // Nav scroll effect
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // FAQ accordion
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
