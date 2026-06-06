@@ -205,7 +205,7 @@
     .hero-visual { position: relative; display: flex; justify-content: center; }
     .hero-photo-frame {
       position: relative;
-      width: 100%; max-width: 400px;
+      width: 100%; max-width: 500px;
       border-radius: var(--r-xl);
       overflow: hidden;
       aspect-ratio: 3/4;
@@ -241,19 +241,19 @@
     }
     .statsbar-inner {
       display: grid;
-      grid-template-columns: repeat(4,1fr);
-      max-width: 900px;
+      grid-template-columns: repeat(5,1fr);
+      max-width: 1100px;
       margin-inline: auto;
       gap: 0;
     }
     .sbar-item {
       text-align: center;
-      padding: 12px;
+      padding: 10px 8px;
       border-left: 1px solid rgba(255,255,255,.1);
     }
     .sbar-item:last-child { border: none; }
-    .sbar-n { font-size: clamp(1.8rem,3.5vw,2.6rem); font-weight: 900; color: var(--pink-2); line-height: 1; }
-    .sbar-l { font-size: .78rem; color: rgba(255,255,255,.55); margin-top: 6px; font-weight: 500; }
+    .sbar-n { font-size: clamp(1.4rem,2.5vw,2.2rem); font-weight: 900; color: var(--pink-2); line-height: 1; }
+    .sbar-l { font-size: .72rem; color: rgba(255,255,255,.55); margin-top: 6px; font-weight: 500; }
 
     /* ══ WHY ME ══ */
     .why { background: var(--white); }
@@ -402,47 +402,69 @@
     .results .sec-sub  { color: rgba(255,255,255,.55); }
     .results .sec-eyebrow { background: rgba(255,255,255,.1); color: var(--pink-2); }
 
+    /* Thumbnail stats row */
+    .thumb-row {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+      max-width: 1100px;
+      margin: 0 auto 48px;
+    }
+    .thumb-card {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 9/16;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #2a1520;
+      box-shadow: 0 4px 20px rgba(0,0,0,.4);
+    }
+    .thumb-card img { width:100%; height:100%; object-fit:cover; object-position:top; display:block; }
+    .thumb-card .thumb-views {
+      position: absolute;
+      bottom: 10px;
+      right: 0; left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+    .thumb-card .thumb-views .tv-num {
+      font-size: 1rem;
+      font-weight: 900;
+      color: #fff;
+      text-shadow: 0 1px 6px rgba(0,0,0,.8);
+    }
+    .thumb-card .thumb-views .tv-ring {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      pointer-events: none;
+    }
+    .thumb-views-inner { position: relative; display: inline-flex; align-items: center; gap: 4px; }
+    .tv-play { font-size: .7rem; opacity: .85; }
+
+    /* Embedded video grid */
     .vid-grid {
       display: grid;
-      grid-template-columns: repeat(3,1fr);
-      gap: 16px;
-      max-width: 860px;
+      grid-template-columns: repeat(4,1fr);
+      gap: 14px;
+      max-width: 1100px;
       margin-inline: auto;
     }
     .vid-cell {
       position: relative;
-      aspect-ratio: 9/16;
       border-radius: 16px;
       overflow: hidden;
       background: #2a1520;
-      cursor: pointer;
     }
-    .vid-cell img { width:100%; height:100%; object-fit:cover; object-position:top; display:block; transition:transform .4s; }
-    .vid-cell:hover img { transform:scale(1.05); }
-    .vid-overlay { position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,.78) 0%, transparent 50%); }
-    .play-btn {
-      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-      width:46px; height:46px; border-radius:50%;
-      background:rgba(255,255,255,.18); border:1.5px solid rgba(255,255,255,.35);
-      display:flex; align-items:center; justify-content:center;
-      color:#fff; font-size:1.1rem;
-      backdrop-filter:blur(4px);
-      transition:all .25s;
+    /* Local video fallback */
+    .vid-cell video {
+      width: 100%;
+      display: block;
+      border-radius: 16px;
     }
-    .vid-cell:hover .play-btn { background:var(--brand); border-color:var(--brand); transform:translate(-50%,-50%) scale(1.1); }
-    .vc-wrap { position:absolute; bottom:14px; right:12px; }
-    .vc-inner { position:relative; display:inline-block; }
-    .vc-num {
-      font-size:.82rem; font-weight:900; color:#fff; position:relative; z-index:2;
-      display:flex; align-items:center; gap:4px;
-      text-shadow:0 1px 4px rgba(0,0,0,.6);
-    }
-    .vc-num::before { content:"▶"; font-size:.58rem; opacity:.85; }
-    .vc-ring {
-      position:absolute; top:50%; left:50%;
-      transform:translate(-50%,-50%);
-      pointer-events:none;
-    }
+    .vid-cell blockquote { margin: 0; }
     .results-note {
       text-align:center; margin-top:36px;
       font-size:.82rem; color:rgba(255,255,255,.4);
@@ -489,24 +511,46 @@
     .brands-wall {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 16px;
       justify-content: center;
-      max-width: 960px;
+      align-items: center;
+      max-width: 1000px;
       margin-inline: auto;
     }
-    .brand-pill {
-      background: var(--pink-0);
+    .brand-card {
+      background: var(--white);
       border: 1.5px solid var(--border);
-      color: var(--dark);
-      padding: 9px 20px;
-      border-radius: 50px;
-      font-size: .82rem;
-      font-weight: 700;
-      white-space: nowrap;
-      transition: all .2s;
+      border-radius: var(--r-sm);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 110px;
+      height: 72px;
+      transition: all .22s;
+      box-shadow: var(--shadow-sm);
     }
-    .brand-pill:hover { background:var(--brand); color:#fff; border-color:var(--brand); transform:translateY(-2px); box-shadow:var(--shadow-sm); }
-    .brand-pill.lg { font-size:.92rem; padding:11px 24px; }
+    .brand-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--pink-2); }
+    .brand-card img {
+      max-width: 100px;
+      max-height: 44px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      filter: grayscale(100%);
+      opacity: .75;
+      transition: all .22s;
+    }
+    .brand-card:hover img { filter: grayscale(0%); opacity: 1; }
+    .brand-card .brand-name {
+      font-size: .78rem;
+      font-weight: 800;
+      color: var(--mid);
+      text-align: center;
+      letter-spacing: .5px;
+      line-height: 1.3;
+    }
+    .brand-card:hover .brand-name { color: var(--brand); }
 
     /* ══ PROCESS ══ */
     .process { background: var(--pink-0); }
@@ -691,9 +735,9 @@
       .steps { grid-template-columns:repeat(3,1fr); }
       .steps::before { display:none; }
       .contact-wrap { grid-template-columns:1fr; }
-      .statsbar-inner { grid-template-columns:repeat(2,1fr); }
+      .statsbar-inner { grid-template-columns:repeat(3,1fr); }
       .sbar-item { border:none; border-bottom:1px solid rgba(255,255,255,.08); }
-      .sbar-item:nth-child(3), .sbar-item:nth-child(4) { border-bottom:none; }
+      .sbar-item:nth-child(4), .sbar-item:nth-child(5) { border-bottom:none; }
     }
     @media (max-width:600px) {
       .sec { padding:64px 5%; }
@@ -707,7 +751,7 @@
 
 <!-- NAV -->
 <nav class="nav" id="nav">
-  <div class="nav-logo">נויה <span>אלפי</span> 💗</div>
+  <div class="nav-logo">נויה <span>אלפי</span></div>
   <a href="#contact" class="nav-cta">לקבלת הצעת מחיר</a>
 </nav>
 
@@ -716,7 +760,7 @@
   <div class="hero-text">
     <div class="hero-tag anim-up">✦ יוצרת תוכן · צלמת · עורכת וידאו</div>
     <h1 class="hero-h1 anim-up anim-d1">
-      יוצרת תוכן שמביאה<br /><em>צפיות, חשיפה ותוצאות</em><br />לעסקים
+      אני לא רודפת אחרי ויראליות.<br /><em>אני יוצרת תוכן שאנשים רוצים לראות.</em><br />וכשזה קורה — הוויראליות כבר מגיעה לבד.
     </h1>
     <p class="hero-lead anim-up anim-d2">
       סרטונים שחצו מיליון צפיות אורגניות, שיתופי פעולה עם מותגים מובילים ותוכן שגורם לאנשים לעצור את הגלילה ולהתחיל להתעניין.
@@ -736,7 +780,7 @@
       </div>
       <div class="hstat">
         <div class="hstat-n">1.2M+</div>
-        <div class="hstat-l">סה״כ לייקים</div>
+        <div class="hstat-l">לייקים בטיקטוק</div>
       </div>
     </div>
     <div class="hero-btns anim-up anim-d4">
@@ -749,21 +793,19 @@
     <div class="hero-photo-frame">
       <img src="images/hero.jpg" alt="נויה אלפי"
            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-      <div class="ph">📷</div>
+      <div class="ph"></div>
     </div>
     <div class="hero-badge b1">
       <div>
         <div class="badge-n">688K</div>
         <div class="badge-l">צפיות אורגניות</div>
       </div>
-      <div class="badge-ico">🔥</div>
     </div>
     <div class="hero-badge b2">
       <div>
         <div class="badge-n">5+</div>
         <div class="badge-l">שנות ניסיון</div>
       </div>
-      <div class="badge-ico">⭐</div>
     </div>
   </div>
 </section>
@@ -785,7 +827,11 @@
     </div>
     <div class="sbar-item">
       <div class="sbar-n">1.2M+</div>
-      <div class="sbar-l">לייקים כולל</div>
+      <div class="sbar-l">לייקים בטיקטוק</div>
+    </div>
+    <div class="sbar-item">
+      <div class="sbar-n">1M+</div>
+      <div class="sbar-l">חשיפות באינסטגרם</div>
     </div>
   </div>
 </div>
@@ -799,21 +845,27 @@
   </div>
   <div class="why-grid">
     <div class="why-card">
-      <div class="why-ico">🎯</div>
+      <div class="why-ico">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+      </div>
       <div>
         <div class="why-t">תוכן שעוצר את הגלילה</div>
         <div class="why-d">סרטונים שנבנים מתוך הבנה עמוקה של התנהגות משתמשים ברשתות. אני יודעת בדיוק מה גורם לאנשים לעצור, לצפות ולפעול — ואני מיישמת את זה בכל פריים.</div>
       </div>
     </div>
     <div class="why-card">
-      <div class="why-ico">💪</div>
+      <div class="why-ico">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
       <div>
         <div class="why-t">ניסיון אמיתי בשטח</div>
         <div class="why-d">יותר מ-5 שנות ניסיון בצילום, עריכה ויצירת תוכן אורגני שנלמד מניסיון ולא מקורס. מאות פרויקטים שמדברים בעד עצמם.</div>
       </div>
     </div>
     <div class="why-card">
-      <div class="why-ico">📊</div>
+      <div class="why-ico">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      </div>
       <div>
         <div class="why-t">תוצאות מדידות</div>
         <div class="why-d">חשיפה, מעורבות, פניות ומכירות שניתן למדוד בפועל — לא רק "אקספוז'ר". עסקים שעבדו איתי ראו תוצאות שהם לא ציפו אליהן.</div>
@@ -835,7 +887,7 @@
     <div class="benefits-img">
       <img src="images/photo3.jpg" alt="נויה אלפי"
            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-      <div class="ph">📸</div>
+      <div class="ph"></div>
     </div>
     <div>
       <div class="sec-eyebrow">מה תקבלו</div>
@@ -877,7 +929,7 @@
       <div class="about-img-frame">
         <img src="images/photo2.jpg" alt="נויה אלפי"
              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-        <div class="ph">📸</div>
+        <div class="ph"></div>
       </div>
       <div class="about-deco"></div>
     </div>
@@ -910,19 +962,19 @@
   </div>
   <div class="srv-grid sec-wide">
     <div class="srv-card">
-      <span class="srv-ico">📱</span>
+      <span class="srv-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span>
       <div class="srv-t">תוכן ממומן ושיתופי פעולה</div>
       <div class="srv-d">סרטוני TikTok, Reels ו-Stories שנראים אותנטיים כי הם אותנטיים. הקהל שלי סומך עליי — וכשהמותג שלכם מופיע אצלי, הוא מופיע בצורה הנכונה.</div>
       <span class="srv-tag">TikTok · Reels · Stories</span>
     </div>
     <div class="srv-card">
-      <span class="srv-ico">📸</span>
+      <span class="srv-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span>
       <div class="srv-t">צילום מקצועי לעסקים</div>
       <div class="srv-d">צילום מוצרים, חללים ותדמית עסקית עם מצלמה מקצועית ועין שמבינה מה עובד ויזואלית. תמונות מוכנות לאתר, לפרסומות ולסושיאל.</div>
       <span class="srv-tag">מוצרים · חלל · תדמית</span>
     </div>
     <div class="srv-card">
-      <span class="srv-ico">🎬</span>
+      <span class="srv-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg></span>
       <div class="srv-t">עריכת וידאו והפקת תוכן</div>
       <div class="srv-d">מעריכה בלבד ועד הפקה מלאה — קונספט, צילום, עריכה, מוסיקה. יש לכם חומרים? אני לוקחת אותם ועושה מהם תוכן שמרשים. 5 שנות עריכה שנרכשו מניסיון.</div>
       <span class="srv-tag">עריכה · הפקה · Reels</span>
@@ -938,138 +990,182 @@
     <p class="sec-sub">סרטונים שחצו חצי מיליון ומיליון צפיות — בתוכן אורגני בלבד, ללא קידום ממומן.</p>
   </div>
 
-  <div class="vid-grid">
-    <div class="vid-cell">
-      <img src="images/tiktok-screen3.jpg" alt="688.7K"
-           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-      <div style="display:none;width:100%;height:100%;background:linear-gradient(160deg,#2a1520,#150d10);align-items:center;justify-content:center;color:#555;font-size:2rem;">▶</div>
-      <div class="vid-overlay"></div>
-      <div class="play-btn">▶</div>
-      <div class="vc-wrap"><div class="vc-inner">
-        <div class="vc-num">688.7K</div>
-        <svg class="vc-ring" width="82" height="34" viewBox="0 0 82 34">
-          <ellipse cx="41" cy="17" rx="37" ry="14" fill="none" stroke="#C0607E" stroke-width="3" transform="rotate(-3,41,17)" style="filter:drop-shadow(0 0 4px rgba(192,96,126,.8))"/>
-        </svg>
+  <!-- צילומי מסך עם צפיות — שמרי בתיקייה images/ בשמות pic1.jpg עד pic7.jpg -->
+  <div class="thumb-row">
+    <div class="thumb-card">
+      <img src="images/pic1.jpg" alt="1.1M views" onerror="this.parentElement.style.background='linear-gradient(160deg,#2a1520,#150d10)';" />
+      <div class="thumb-views"><div class="thumb-views-inner">
+        <span class="tv-play">▶</span><span class="tv-num">1.1M</span>
+        <svg class="tv-ring" width="76" height="30" viewBox="0 0 76 30"><ellipse cx="38" cy="15" rx="34" ry="12" fill="none" stroke="#C0607E" stroke-width="2.5" transform="rotate(-2,38,15)" style="filter:drop-shadow(0 0 4px rgba(192,96,126,.9))"/></svg>
       </div></div>
     </div>
-    <div class="vid-cell">
-      <img src="images/tiktok-screen3.jpg" alt="674.8K"
-           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-      <div style="display:none;width:100%;height:100%;background:linear-gradient(160deg,#2a1520,#150d10);align-items:center;justify-content:center;color:#555;font-size:2rem;">▶</div>
-      <div class="vid-overlay"></div>
-      <div class="play-btn">▶</div>
-      <div class="vc-wrap"><div class="vc-inner">
-        <div class="vc-num">674.8K</div>
-        <svg class="vc-ring" width="82" height="34" viewBox="0 0 82 34">
-          <ellipse cx="41" cy="17" rx="37" ry="14" fill="none" stroke="#C0607E" stroke-width="3" transform="rotate(2,41,17)" style="filter:drop-shadow(0 0 4px rgba(192,96,126,.8))"/>
-        </svg>
+    <div class="thumb-card">
+      <img src="images/pic2.jpg" alt="688.7K views" onerror="this.parentElement.style.background='linear-gradient(160deg,#2a1520,#150d10)';" />
+      <div class="thumb-views"><div class="thumb-views-inner">
+        <span class="tv-play">▶</span><span class="tv-num">688.7K</span>
+        <svg class="tv-ring" width="92" height="30" viewBox="0 0 92 30"><ellipse cx="46" cy="15" rx="43" ry="12" fill="none" stroke="#C0607E" stroke-width="2.5" transform="rotate(2,46,15)" style="filter:drop-shadow(0 0 4px rgba(192,96,126,.9))"/></svg>
       </div></div>
     </div>
-    <div class="vid-cell">
-      <img src="images/tiktok-screen2.jpg" alt="619.9K"
-           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-      <div style="display:none;width:100%;height:100%;background:linear-gradient(160deg,#2a1520,#150d10);align-items:center;justify-content:center;color:#555;font-size:2rem;">▶</div>
-      <div class="vid-overlay"></div>
-      <div class="play-btn">▶</div>
-      <div class="vc-wrap"><div class="vc-inner">
-        <div class="vc-num">619.9K</div>
-        <svg class="vc-ring" width="82" height="34" viewBox="0 0 82 34">
-          <ellipse cx="41" cy="17" rx="37" ry="14" fill="none" stroke="#C0607E" stroke-width="3" transform="rotate(-2,41,17)" style="filter:drop-shadow(0 0 4px rgba(192,96,126,.8))"/>
-        </svg>
+    <div class="thumb-card">
+      <img src="images/pic3.jpg" alt="674.8K views" onerror="this.parentElement.style.background='linear-gradient(160deg,#2a1520,#150d10)';" />
+      <div class="thumb-views"><div class="thumb-views-inner">
+        <span class="tv-play">▶</span><span class="tv-num">674.8K</span>
+        <svg class="tv-ring" width="92" height="30" viewBox="0 0 92 30"><ellipse cx="46" cy="15" rx="43" ry="12" fill="none" stroke="#C0607E" stroke-width="2.5" transform="rotate(-2,46,15)" style="filter:drop-shadow(0 0 4px rgba(192,96,126,.9))"/></svg>
       </div></div>
     </div>
-    <div class="vid-cell">
-      <img src="images/tiktok-screen3.jpg" alt="243.6K"
-           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-      <div style="display:none;width:100%;height:100%;background:linear-gradient(160deg,#2a1520,#150d10);align-items:center;justify-content:center;color:#555;font-size:2rem;">▶</div>
-      <div class="vid-overlay"></div>
-      <div class="play-btn">▶</div>
-      <div class="vc-wrap"><div class="vc-inner">
-        <div class="vc-num">243.6K</div>
-        <svg class="vc-ring" width="78" height="34" viewBox="0 0 78 34">
-          <ellipse cx="39" cy="17" rx="35" ry="14" fill="none" stroke="#C0607E" stroke-width="3" transform="rotate(1,39,17)" style="filter:drop-shadow(0 0 4px rgba(192,96,126,.8))"/>
-        </svg>
+    <div class="thumb-card">
+      <img src="images/pic4.jpg" alt="541K views" onerror="this.parentElement.style.background='linear-gradient(160deg,#2a1520,#150d10)';" />
+      <div class="thumb-views"><div class="thumb-views-inner">
+        <span class="tv-play">▶</span><span class="tv-num">541K</span>
+        <svg class="tv-ring" width="82" height="30" viewBox="0 0 82 30"><ellipse cx="41" cy="15" rx="38" ry="12" fill="none" stroke="#C0607E" stroke-width="2.5" transform="rotate(1,41,15)" style="filter:drop-shadow(0 0 4px rgba(192,96,126,.9))"/></svg>
       </div></div>
     </div>
-    <div class="vid-cell">
-      <img src="images/tiktok-screen3.jpg" alt="108.4K"
-           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-      <div style="display:none;width:100%;height:100%;background:linear-gradient(160deg,#2a1520,#150d10);align-items:center;justify-content:center;color:#555;font-size:2rem;">▶</div>
-      <div class="vid-overlay"></div>
-      <div class="play-btn">▶</div>
-      <div class="vc-wrap"><div class="vc-inner">
-        <div class="vc-num">108.4K</div>
-        <svg class="vc-ring" width="78" height="34" viewBox="0 0 78 34">
-          <ellipse cx="39" cy="17" rx="35" ry="14" fill="none" stroke="#C0607E" stroke-width="3" transform="rotate(-1,39,17)" style="filter:drop-shadow(0 0 4px rgba(192,96,126,.8))"/>
-        </svg>
+    <div class="thumb-card">
+      <img src="images/pic5.jpg" alt="446.3K views" onerror="this.parentElement.style.background='linear-gradient(160deg,#2a1520,#150d10)';" />
+      <div class="thumb-views"><div class="thumb-views-inner">
+        <span class="tv-play">▶</span><span class="tv-num">446.3K</span>
+        <svg class="tv-ring" width="88" height="30" viewBox="0 0 88 30"><ellipse cx="44" cy="15" rx="40" ry="12" fill="none" stroke="#C0607E" stroke-width="2.5" transform="rotate(1,44,15)" style="filter:drop-shadow(0 0 4px rgba(192,96,126,.9))"/></svg>
       </div></div>
     </div>
-    <div class="vid-cell">
-      <img src="images/tiktok-screen1.jpg" alt="92.8K"
-           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-      <div style="display:none;width:100%;height:100%;background:linear-gradient(160deg,#2a1520,#150d10);align-items:center;justify-content:center;color:#555;font-size:2rem;">▶</div>
-      <div class="vid-overlay"></div>
-      <div class="play-btn">▶</div>
-      <div class="vc-wrap"><div class="vc-inner">
-        <div class="vc-num">92.8K</div>
-        <svg class="vc-ring" width="70" height="30" viewBox="0 0 70 30">
-          <ellipse cx="35" cy="15" rx="31" ry="12" fill="none" stroke="#C0607E" stroke-width="3" transform="rotate(3,35,15)" style="filter:drop-shadow(0 0 4px rgba(192,96,126,.8))"/>
-        </svg>
+    <div class="thumb-card">
+      <img src="images/pic6.jpg" alt="413K views" onerror="this.parentElement.style.background='linear-gradient(160deg,#2a1520,#150d10)';" />
+      <div class="thumb-views"><div class="thumb-views-inner">
+        <span class="tv-play">▶</span><span class="tv-num">413K</span>
+        <svg class="tv-ring" width="82" height="30" viewBox="0 0 82 30"><ellipse cx="41" cy="15" rx="38" ry="12" fill="none" stroke="#C0607E" stroke-width="2.5" transform="rotate(-1,41,15)" style="filter:drop-shadow(0 0 4px rgba(192,96,126,.9))"/></svg>
+      </div></div>
+    </div>
+    <div class="thumb-card">
+      <img src="images/pic7.jpg" alt="243.6K views" onerror="this.parentElement.style.background='linear-gradient(160deg,#2a1520,#150d10)';" />
+      <div class="thumb-views"><div class="thumb-views-inner">
+        <span class="tv-play">▶</span><span class="tv-num">243.6K</span>
+        <svg class="tv-ring" width="88" height="30" viewBox="0 0 88 30"><ellipse cx="44" cy="15" rx="40" ry="12" fill="none" stroke="#C0607E" stroke-width="2.5" transform="rotate(-1,44,15)" style="filter:drop-shadow(0 0 4px rgba(192,96,126,.9))"/></svg>
       </div></div>
     </div>
   </div>
+
+  <!-- Embedded TikTok videos — top by views -->
+  <!-- שמרי סרטונים בתיקייה videos/ בשמות: video1.mp4 עד video7.mp4 -->
+  <div class="vid-grid">
+    <div class="vid-cell" id="vc-1">
+      <video src="videos/video1.mp4" loop muted playsinline autoplay
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block';" style="display:none;"></video>
+      <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@noyaaaaa.a/video/7430817702677187858"
+        data-video-id="7430817702677187858" style="max-width:325px;min-width:220px;">
+        <section></section>
+      </blockquote>
+    </div>
+    <div class="vid-cell" id="vc-2">
+      <video src="videos/video2.mp4" loop muted playsinline autoplay
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block';" style="display:none;"></video>
+      <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@noyaaaaa.a/video/7425973018419154184"
+        data-video-id="7425973018419154184" style="max-width:325px;min-width:220px;">
+        <section></section>
+      </blockquote>
+    </div>
+    <div class="vid-cell" id="vc-3">
+      <video src="videos/video3.mp4" loop muted playsinline autoplay
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block';" style="display:none;"></video>
+      <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@noyaaaaa.a/video/7426021986352057607"
+        data-video-id="7426021986352057607" style="max-width:325px;min-width:220px;">
+        <section></section>
+      </blockquote>
+    </div>
+    <div class="vid-cell" id="vc-4">
+      <video src="videos/video4.mp4" loop muted playsinline autoplay
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block';" style="display:none;"></video>
+      <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@noyaaaaa.a/video/7473799757807308040"
+        data-video-id="7473799757807308040" style="max-width:325px;min-width:220px;">
+        <section></section>
+      </blockquote>
+    </div>
+    <div class="vid-cell" id="vc-5">
+      <video src="videos/video5.mp4" loop muted playsinline autoplay
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block';" style="display:none;"></video>
+      <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@noyaaaaa.a/video/7469144213632945426"
+        data-video-id="7469144213632945426" style="max-width:325px;min-width:220px;">
+        <section></section>
+      </blockquote>
+    </div>
+    <div class="vid-cell" id="vc-6">
+      <video src="videos/video6.mp4" loop muted playsinline autoplay
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block';" style="display:none;"></video>
+      <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@noyaaaaa.a/video/7397095220376014087"
+        data-video-id="7397095220376014087" style="max-width:325px;min-width:220px;">
+        <section></section>
+      </blockquote>
+    </div>
+    <div class="vid-cell" id="vc-7">
+      <video src="videos/video7.mp4" loop muted playsinline autoplay
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block';" style="display:none;"></video>
+      <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@noyaaaaa.a/video/7333898355359108354"
+        data-video-id="7333898355359108354" style="max-width:325px;min-width:220px;">
+        <section></section>
+      </blockquote>
+    </div>
+    <div class="vid-cell" id="vc-8">
+      <video src="videos/video8.mp4" loop muted playsinline autoplay
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block';" style="display:none;"></video>
+      <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@noyaaaaa.a/video/7318689663630331138"
+        data-video-id="7318689663630331138" style="max-width:325px;min-width:220px;">
+        <section></section>
+      </blockquote>
+    </div>
+    <div class="vid-cell" id="vc-9">
+      <video src="videos/video9.mp4" loop muted playsinline autoplay
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block';" style="display:none;"></video>
+      <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@noyaaaaa.a/video/7298669251328511233"
+        data-video-id="7298669251328511233" style="max-width:325px;min-width:220px;">
+        <section></section>
+      </blockquote>
+    </div>
+    <div class="vid-cell" id="vc-10">
+      <video src="videos/video10.mp4" loop muted playsinline autoplay
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block';" style="display:none;"></video>
+      <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@noyaaaaa.a/video/7312451718254464258"
+        data-video-id="7312451718254464258" style="max-width:325px;min-width:220px;">
+        <section></section>
+      </blockquote>
+    </div>
+    <div class="vid-cell" id="vc-11">
+      <video src="videos/video11.mp4" loop muted playsinline autoplay
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block';" style="display:none;"></video>
+      <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@noyaaaaa.a/video/7299044554970254593"
+        data-video-id="7299044554970254593" style="max-width:325px;min-width:220px;">
+        <section></section>
+      </blockquote>
+    </div>
+    <div class="vid-cell" id="vc-12">
+      <video src="videos/video12.mp4" loop muted playsinline autoplay
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block';" style="display:none;"></video>
+      <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@noyaaaaa.a/video/7275348269381766401"
+        data-video-id="7275348269381766401" style="max-width:325px;min-width:220px;">
+        <section></section>
+      </blockquote>
+    </div>
+  </div>
+  <script async src="https://www.tiktok.com/embed.js"></script>
+  <script>
+    // Show local video if file exists, hide TikTok embed
+    document.querySelectorAll('.vid-cell').forEach(cell => {
+      const vid = cell.querySelector('video');
+      const bq  = cell.querySelector('blockquote');
+      if (!vid) return;
+      vid.addEventListener('loadeddata', () => {
+        vid.style.display = 'block';
+        if (bq) bq.style.display = 'none';
+      });
+    });
+  </script>
 
   <p class="results-note">כל הנתונים מוצגים מצפיות אורגניות בלבד, ללא קידום ממומן.</p>
   <div class="results-cta">
     <a href="https://www.tiktok.com/@noyaaaaa.a?_r=1&_t=ZS-96zA6pg2TrM" target="_blank" class="btn btn-white">
-      🎵 לכל הסרטונים בטיקטוק
+      לכל הסרטונים בטיקטוק
     </a>
   </div>
 </section>
 
-<!-- ══ TESTIMONIALS ══ -->
-<section class="sec testimonials" id="testimonials">
-  <div class="sec-hd-center">
-    <div class="sec-eyebrow">המלצות</div>
-    <h2 class="sec-title">מה הלקוחות אומרים</h2>
-    <p class="sec-sub">בסוף, המלצה אמיתית שווה יותר מכל מספר.</p>
-  </div>
-  <div class="testi-grid sec-wide">
-    <div class="testi-card">
-      <div class="testi-stars">★★★★★</div>
-      <div class="testi-quote">הסרטון שנויה יצרה עבורנו הביא חשיפה שלא קיבלנו חודשים קודם. היא הבינה את המותג שלנו מהרגע הראשון ועשתה תוכן שהרגיש טבעי לגמרי.</div>
-      <div class="testi-author">
-        <div class="testi-avatar">👩</div>
-        <div>
-          <div class="testi-name">שירה כ.</div>
-          <div class="testi-biz">מנהלת שיווק</div>
-        </div>
-      </div>
-    </div>
-    <div class="testi-card">
-      <div class="testi-stars">★★★★★</div>
-      <div class="testi-quote">הרגשנו שיש מישהי שמבינה את המותג שלנו באמת. לא עוד יוצרת שמקריאה טקסט — נויה הביאה עצמה לתוכן ויצרה חיבור אמיתי עם הקהל שלנו.</div>
-      <div class="testi-author">
-        <div class="testi-avatar">👨</div>
-        <div>
-          <div class="testi-name">אביב מ.</div>
-          <div class="testi-biz">בעל עסק</div>
-        </div>
-      </div>
-    </div>
-    <div class="testi-card">
-      <div class="testi-stars">★★★★★</div>
-      <div class="testi-quote">מקצועיות, אמינות ותוצאות — זה מה שקיבלנו. הסרטון הגיע לעשרות אלפי צפיות אורגניות ועדיין מביא לנו פניות חדשות.</div>
-      <div class="testi-author">
-        <div class="testi-avatar">👩</div>
-        <div>
-          <div class="testi-name">מיה ל.</div>
-          <div class="testi-biz">מנהלת מדיה חברתית</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- TESTIMONIALS REMOVED - placeholder for real testimonials -->
 
 <!-- ══ BRANDS ══ -->
 <section class="sec brands" id="brands">
@@ -1078,29 +1174,171 @@
     <h2 class="sec-title">מותגים שבחרו לעבוד איתי</h2>
     <p class="sec-sub">מקבוצת L'Oréal ועד עסקים פרטיים — כולם קיבלו תוכן שעבד.</p>
   </div>
+  <!-- ═══════════════════════════════════════════════════════════════
+       לוגואים: שמרי קבצים בתיקייה images/brands/ לפי השמות הבאים.
+       כל לוגו שתשימי יופיע אוטומטית — PNG או JPG, גודל חופשי.
+       לוגואים שכבר נמצאו באינטרנט יוצגו אוטומטית עד שתוסיפי קובץ מקומי.
+       ═══════════════════════════════════════════════════════════════ -->
   <div class="brands-wall">
-    <span class="brand-pill lg">AMERICAN EAGLE</span>
-    <span class="brand-pill lg">L'ORÉAL PARIS</span>
-    <span class="brand-pill lg">LANCÔME</span>
-    <span class="brand-pill lg">MAYBELLINE</span>
-    <span class="brand-pill lg">BILLABONG</span>
-    <span class="brand-pill">NYX PROFESSIONAL</span>
-    <span class="brand-pill">ATLAS HOTELS</span>
-    <span class="brand-pill">FLYING TIGER</span>
-    <span class="brand-pill">Nestlé</span>
-    <span class="brand-pill">:story</span>
-    <span class="brand-pill">PITMASTER</span>
-    <span class="brand-pill">T-LAB</span>
-    <span class="brand-pill">Airalo</span>
-    <span class="brand-pill">NAYA BEACH</span>
-    <span class="brand-pill">המרקכלין</span>
-    <span class="brand-pill">חנות הוורדה</span>
-    <span class="brand-pill">sayeret.co.il</span>
-    <span class="brand-pill">MAYER HOUSE</span>
-    <span class="brand-pill">BY14</span>
-    <span class="brand-pill">PIEDRA</span>
-    <span class="brand-pill">המון</span>
-    <span class="brand-pill">הסטוק</span>
+
+    <!-- loreal.png -->
+    <div class="brand-card">
+      <img src="images/brands/loreal.png" alt="L'Oréal Paris"
+           onerror="this.src='https://logo.clearbit.com/loreal.com';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='block';};" />
+      <span class="brand-name" style="display:none;">L'ORÉAL PARIS</span>
+    </div>
+
+    <!-- lancome.png -->
+    <div class="brand-card">
+      <img src="images/brands/lancome.png" alt="Lancôme"
+           onerror="this.src='https://logo.clearbit.com/lancome.com';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='block';};" />
+      <span class="brand-name" style="display:none;">LANCÔME</span>
+    </div>
+
+    <!-- maybelline.png -->
+    <div class="brand-card">
+      <img src="images/brands/maybelline.png" alt="Maybelline"
+           onerror="this.src='https://logo.clearbit.com/maybelline.com';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='block';};" />
+      <span class="brand-name" style="display:none;">MAYBELLINE</span>
+    </div>
+
+    <!-- nyx.png -->
+    <div class="brand-card">
+      <img src="images/brands/nyx.png" alt="NYX"
+           onerror="this.src='https://logo.clearbit.com/nyx.com';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='block';};" />
+      <span class="brand-name" style="display:none;">NYX</span>
+    </div>
+
+    <!-- americaneagle.png -->
+    <div class="brand-card">
+      <img src="images/brands/americaneagle.png" alt="American Eagle"
+           onerror="this.src='https://logo.clearbit.com/americaneagle.com';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='block';};" />
+      <span class="brand-name" style="display:none;">AMERICAN EAGLE</span>
+    </div>
+
+    <!-- billabong.png -->
+    <div class="brand-card">
+      <img src="images/brands/billabong.png" alt="Billabong"
+           onerror="this.src='https://logo.clearbit.com/billabong.com';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='block';};" />
+      <span class="brand-name" style="display:none;">BILLABONG</span>
+    </div>
+
+    <!-- flyingtiger.png -->
+    <div class="brand-card">
+      <img src="images/brands/flyingtiger.png" alt="Flying Tiger"
+           onerror="this.src='https://logo.clearbit.com/flyingtiger.com';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='block';};" />
+      <span class="brand-name" style="display:none;">FLYING TIGER</span>
+    </div>
+
+    <!-- nestle.png -->
+    <div class="brand-card">
+      <img src="images/brands/nestle.png" alt="Nestlé"
+           onerror="this.src='https://logo.clearbit.com/nestle.com';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='block';};" />
+      <span class="brand-name" style="display:none;">Nestlé</span>
+    </div>
+
+    <!-- airalo.png -->
+    <div class="brand-card">
+      <img src="images/brands/airalo.png" alt="Airalo"
+           onerror="this.src='https://logo.clearbit.com/airalo.com';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='block';};" />
+      <span class="brand-name" style="display:none;">Airalo</span>
+    </div>
+
+    <!-- atlas.png -->
+    <div class="brand-card">
+      <img src="images/brands/atlas.png" alt="Atlas Hotels"
+           onerror="this.src='https://atlashotels-experience.co.il/wp-content/uploads/2021/04/ATLAS_LOGO_WEB-100x20.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='block';};" />
+      <span class="brand-name" style="display:none;">ATLAS HOTELS</span>
+    </div>
+
+    <!-- story.png -->
+    <div class="brand-card">
+      <img src="images/brands/story.png" alt=":story"
+           onerror="this.src='https://storyonline.co.il/cdn/shop/files/story_logo_100px_1.png?v=1777980992';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='block';};" />
+      <span class="brand-name" style="display:none;">:story</span>
+    </div>
+
+    <!-- pitmaster.png -->
+    <div class="brand-card">
+      <img src="images/brands/pitmaster.png" alt="Pitmaster"
+           onerror="this.src='https://pitmaster.show/images/facebookGroup.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='block';};" />
+      <span class="brand-name" style="display:none;">PITMASTER</span>
+    </div>
+
+    <!-- tlab.png -->
+    <div class="brand-card">
+      <img src="images/brands/tlab.png" alt="T-LAB"
+           onerror="this.src='https://static.wixstatic.com/media/29adeb_fe9b9359059a4ecd8e5e47f655d4efe9~mv2.png/v1/crop/x_0,y_280,w_2000,h_855/fill/w_606,h_259,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/T-LAB%20page%20-%20logo_edited.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='block';};" />
+      <span class="brand-name" style="display:none;">T LAB</span>
+    </div>
+
+    <!-- naya.png -->
+    <div class="brand-card">
+      <img src="images/brands/naya.png" alt="Naya Beach"
+           onerror="this.src='https://nayabeach.co.il/wp-content/uploads/2021/11/naya-logo.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='block';};" />
+      <span class="brand-name" style="display:none;">NAYA BEACH</span>
+    </div>
+
+    <!-- marklin.png -->
+    <div class="brand-card">
+      <img src="images/brands/marklin.png" alt="המרקלין"
+           onerror="this.src='https://hatraklin.co.il/wp-content/uploads/sites/471/2022/04/logos-02.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='block';};" />
+      <span class="brand-name" style="display:none;">המרקלין</span>
+    </div>
+
+    <!-- horada.png -->
+    <div class="brand-card">
+      <img src="images/brands/horada.png" alt="חנות הורדה"
+           onerror="this.src='https://vrooda.co.il/cdn/shop/files/logo-pink.png?v=1745842990&width=200';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='block';};" />
+      <span class="brand-name" style="display:none;">חנות הורדה</span>
+    </div>
+
+    <!-- sayeret.png -->
+    <div class="brand-card">
+      <img src="images/brands/sayeret.png" alt="הסיירת"
+           onerror="this.src='https://www.sayeret.co.il/media/logo/stores/1/Group_1699_2x.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='block';};" />
+      <span class="brand-name" style="display:none;">הסיירת</span>
+    </div>
+
+    <!-- by14.png -->
+    <div class="brand-card">
+      <img src="images/brands/by14.png" alt="BY14"
+           onerror="this.src='https://by14hotel.com/wp-content/uploads/sites/2/2022/04/logo.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='block';};" />
+      <span class="brand-name" style="display:none;">BY14</span>
+    </div>
+
+    <!-- mayerhouse.png -->
+    <div class="brand-card">
+      <img src="images/brands/mayerhouse.png" alt="Mayer House"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='block';" />
+      <span class="brand-name" style="display:none;">MAYER HOUSE</span>
+    </div>
+
+    <!-- piedra.png -->
+    <div class="brand-card">
+      <img src="images/brands/piedra.png" alt="Piedra"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='block';" />
+      <span class="brand-name" style="display:none;">PIEDRA</span>
+    </div>
+
+    <!-- hamangan.png -->
+    <div class="brand-card">
+      <img src="images/brands/hamangan.png" alt="המנגן"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='block';" />
+      <span class="brand-name" style="display:none;">המנגן</span>
+    </div>
+
+    <!-- hastoq.png -->
+    <div class="brand-card">
+      <img src="images/brands/hastoq.png" alt="הסטוק"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='block';" />
+      <span class="brand-name" style="display:none;">הסטוק</span>
+    </div>
+
+    <!-- הוסיפי כאן מותגים נוספים: העתיקי בלוק brand-card חדש
+         ושמרי את הלוגו כ: images/brands/[שם].png -->
+
+  </div>
   </div>
 </section>
 
@@ -1150,35 +1388,35 @@
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">
         <span>כמה זמן לוקח פרויקט?</span>
-        <span class="faq-arrow">⌄</span>
+        <span class="faq-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
       </button>
       <div class="faq-a">תלוי בסוג הפרויקט — סרטון קצר לסושיאל לרוב מוכן תוך 3-5 ימי עסקים. פרויקט תדמית מלא עם צילום ועריכה יכול לקחת 1-2 שבועות. בכל מקרה נקבע לוח זמנים ברור מראש.</div>
     </div>
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">
         <span>האם ניתן להזמין רק עריכה?</span>
-        <span class="faq-arrow">⌄</span>
+        <span class="faq-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
       </button>
       <div class="faq-a">בהחלט! אם יש לכם חומרי גלם שצולמו כבר, אני יכולה לקחת אותם ולערוך לסרטון מקצועי. זה אחד השירותים הנפוצים ביותר שלי — עריכה לבד, ללא שלב הצילום.</div>
     </div>
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">
         <span>האם עובדים עם עסקים קטנים?</span>
-        <span class="faq-arrow">⌄</span>
+        <span class="faq-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
       </button>
       <div class="faq-a">כן, בהחלט. חלק גדול מהלקוחות שלי הם עסקים קטנים ובינוניים. לכל עסק יש פוטנציאל ויראלי — הגודל לא קובע, התוכן קובע.</div>
     </div>
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">
         <span>האם ניתן לקבל מספר סרטונים?</span>
-        <span class="faq-arrow">⌄</span>
+        <span class="faq-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
       </button>
       <div class="faq-a">כן! יש חבילות לפרויקטים חוזרים עם מספר סרטונים לאורך זמן. זה גם הכי משתלם — ככל שהעבודה יותר רציפה, התוכן יותר אחיד ואפקטיבי.</div>
     </div>
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">
         <span>מה עלות השירות?</span>
-        <span class="faq-arrow">⌄</span>
+        <span class="faq-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
       </button>
       <div class="faq-a">העלות תלויה בסוג השירות, היקף הפרויקט והמורכבות שלו. מלאו את הטופס בתחתית הדף ואחזור אליכם עם הצעת מחיר מותאמת תוך 24 שעות.</div>
     </div>
@@ -1190,7 +1428,7 @@
   <div class="sec-narrow" style="text-align:center;">
     <h2 class="finalcta-t">מוכנים ליצור תוכן שאנשים<br />באמת עוצרים בשבילו?</h2>
     <p class="finalcta-sub">ספרו לי על העסק שלכם ואחזור אליכם תוך 24 שעות.</p>
-    <a href="#contact" class="btn btn-white btn-lg">בואו נדבר 💗</a>
+    <a href="#contact" class="btn btn-white btn-lg">בואו נדבר</a>
   </div>
 </section>
 
@@ -1199,17 +1437,17 @@
   <div class="contact-wrap">
     <div class="contact-info">
       <div class="sec-eyebrow">צרו קשר</div>
-      <h2 class="sec-title">בואו נתחיל<br />משהו טוב 🤝</h2>
+      <h2 class="sec-title">בואו נתחיל<br />משהו טוב</h2>
       <p>מלאו את הטופס ואחזור אליכם תוך 24 שעות. כל פנייה מקבלת ממני התייחסות אישית — אין כאן תבניות, יש כאן שיחה אמיתית.</p>
       <div class="contact-links">
         <a href="mailto:noyaalfi@gmail.com" class="clink">
-          <span class="clink-ico">📧</span>noyaalfi@gmail.com
+          <span class="clink-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>noyaalfi@gmail.com
         </a>
         <a href="https://www.tiktok.com/@noyaaaaa.a?_r=1&_t=ZS-96zA6pg2TrM" target="_blank" class="clink">
-          <span class="clink-ico">🎵</span>TikTok: @noyaaaaa.a
+          <span class="clink-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></span>TikTok: @noyaaaaa.a
         </a>
         <a href="https://www.instagram.com/noya_alfi?igsh=NWVpdjdid2Yzcjdn&utm_source=qr" target="_blank" class="clink">
-          <span class="clink-ico">📸</span>Instagram: @noya_alfi
+          <span class="clink-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></span>Instagram: @noya_alfi
         </a>
       </div>
     </div>
