@@ -771,6 +771,34 @@
       .sbar-item { border:none; border-bottom:1px solid rgba(255,255,255,.08); }
       .sbar-item:nth-child(4), .sbar-item:nth-child(5) { border-bottom:none; }
     }
+    /* ══ VIDEO OVERLAY ══ */
+    .vid-overlay {
+      position: absolute;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 5;
+      background: rgba(0,0,0,.15);
+      transition: background .2s;
+    }
+    .vid-overlay:hover { background: rgba(0,0,0,.25); }
+    .vid-play-btn {
+      width: 58px; height: 58px;
+      background: rgba(0,0,0,.5);
+      border: 2.5px solid rgba(255,255,255,.85);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 1.3rem;
+      backdrop-filter: blur(6px);
+      transition: all .2s;
+      padding-left: 4px;
+      user-select: none;
+    }
+    .vid-overlay:hover .vid-play-btn { background: rgba(192,96,126,.75); transform: scale(1.1); border-color: #fff; }
+    .vid-overlay.playing .vid-play-btn { padding-left: 0; }
+
     @media (max-width:600px) {
       .sec { padding:64px 5%; }
       .vid-grid { grid-template-columns:repeat(3,1fr); gap:8px; }
@@ -1079,7 +1107,7 @@
   <!-- שמרי סרטונים בתיקייה videos/ בשמות: video1.mp4 עד video7.mp4 -->
   <div class="vid-grid">
     <div class="vid-cell" id="vc-1">
-      <video src="videos/video1.mp4" loop muted playsinline autoplay
+      <video src="videos/video1.mp4" playsinline loop
              onerror="this.style.display='none';this.nextElementSibling.style.display='block';" style="display:none;"></video>
       <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@noyaaaaa.a/video/7430817702677187858"
         data-video-id="7430817702677187858" style="max-width:325px;min-width:220px;">
@@ -1087,7 +1115,7 @@
       </blockquote>
     </div>
     <div class="vid-cell" id="vc-2">
-      <video src="videos/video2.mp4" loop muted playsinline autoplay
+      <video src="videos/video2.mp4" playsinline loop
              onerror="this.style.display='none';this.nextElementSibling.style.display='block';" style="display:none;"></video>
       <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@noyaaaaa.a/video/7425973018419154184"
         data-video-id="7425973018419154184" style="max-width:325px;min-width:220px;">
@@ -1095,7 +1123,7 @@
       </blockquote>
     </div>
     <div class="vid-cell" id="vc-3">
-      <video src="videos/video3.mp4" loop muted playsinline autoplay
+      <video src="videos/video3.mp4" playsinline loop
              onerror="this.style.display='none';this.nextElementSibling.style.display='block';" style="display:none;"></video>
       <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@noyaaaaa.a/video/7426021986352057607"
         data-video-id="7426021986352057607" style="max-width:325px;min-width:220px;">
@@ -1103,7 +1131,7 @@
       </blockquote>
     </div>
     <div class="vid-cell" id="vc-4">
-      <video src="videos/video4.mp4" loop muted playsinline autoplay
+      <video src="videos/video4.mp4" playsinline loop
              onerror="this.style.display='none';this.nextElementSibling.style.display='block';" style="display:none;"></video>
       <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@noyaaaaa.a/video/7473799757807308040"
         data-video-id="7473799757807308040" style="max-width:325px;min-width:220px;">
@@ -1111,7 +1139,7 @@
       </blockquote>
     </div>
     <div class="vid-cell" id="vc-5">
-      <video src="videos/video5.mp4" loop muted playsinline autoplay
+      <video src="videos/video5.mp4" playsinline loop
              onerror="this.style.display='none';this.nextElementSibling.style.display='block';" style="display:none;"></video>
       <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@noyaaaaa.a/video/7469144213632945426"
         data-video-id="7469144213632945426" style="max-width:325px;min-width:220px;">
@@ -1119,7 +1147,7 @@
       </blockquote>
     </div>
     <div class="vid-cell" id="vc-6">
-      <video src="videos/video6.mp4" loop muted playsinline autoplay
+      <video src="videos/video6.mp4" playsinline loop
              onerror="this.style.display='none';this.nextElementSibling.style.display='block';" style="display:none;"></video>
       <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@noyaaaaa.a/video/7397095220376014087"
         data-video-id="7397095220376014087" style="max-width:325px;min-width:220px;">
@@ -1127,7 +1155,7 @@
       </blockquote>
     </div>
     <div class="vid-cell" id="vc-7">
-      <video src="videos/video7.mp4" loop muted playsinline autoplay
+      <video src="videos/video7.mp4" playsinline loop
              onerror="this.style.display='none';this.nextElementSibling.style.display='block';" style="display:none;"></video>
       <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@noyaaaaa.a/video/7333898355359108354"
         data-video-id="7333898355359108354" style="max-width:325px;min-width:220px;">
@@ -1135,7 +1163,7 @@
       </blockquote>
     </div>
     <div class="vid-cell" id="vc-8">
-      <video src="videos/video8.mp4" loop muted playsinline autoplay
+      <video src="videos/video8.mp4" playsinline loop
              onerror="this.style.display='none';this.nextElementSibling.style.display='block';" style="display:none;"></video>
       <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@noyaaaaa.a/video/7318689663630331138"
         data-video-id="7318689663630331138" style="max-width:325px;min-width:220px;">
@@ -1143,7 +1171,7 @@
       </blockquote>
     </div>
     <div class="vid-cell" id="vc-9">
-      <video src="videos/video9.mp4" loop muted playsinline autoplay
+      <video src="videos/video9.mp4" playsinline loop
              onerror="this.style.display='none';this.nextElementSibling.style.display='block';" style="display:none;"></video>
       <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@noyaaaaa.a/video/7298669251328511233"
         data-video-id="7298669251328511233" style="max-width:325px;min-width:220px;">
@@ -1151,7 +1179,7 @@
       </blockquote>
     </div>
     <div class="vid-cell" id="vc-10">
-      <video src="videos/video10.mp4" loop muted playsinline autoplay
+      <video src="videos/video10.mp4" playsinline loop
              onerror="this.style.display='none';this.nextElementSibling.style.display='block';" style="display:none;"></video>
       <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@noyaaaaa.a/video/7312451718254464258"
         data-video-id="7312451718254464258" style="max-width:325px;min-width:220px;">
@@ -1159,7 +1187,7 @@
       </blockquote>
     </div>
     <div class="vid-cell" id="vc-11">
-      <video src="videos/video11.mp4" loop muted playsinline autoplay
+      <video src="videos/video11.mp4" playsinline loop
              onerror="this.style.display='none';this.nextElementSibling.style.display='block';" style="display:none;"></video>
       <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@noyaaaaa.a/video/7299044554970254593"
         data-video-id="7299044554970254593" style="max-width:325px;min-width:220px;">
@@ -1167,7 +1195,7 @@
       </blockquote>
     </div>
     <div class="vid-cell" id="vc-12">
-      <video src="videos/video12.mp4" loop muted playsinline autoplay
+      <video src="videos/video12.mp4" playsinline loop
              onerror="this.style.display='none';this.nextElementSibling.style.display='block';" style="display:none;"></video>
       <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@noyaaaaa.a/video/7275348269381766401"
         data-video-id="7275348269381766401" style="max-width:325px;min-width:220px;">
@@ -1177,14 +1205,39 @@
   </div>
   <script async src="https://www.tiktok.com/embed.js"></script>
   <script>
-    // Show local video if file exists, hide TikTok embed
+    // Video player with play/pause and sound
     document.querySelectorAll('.vid-cell').forEach(cell => {
       const vid = cell.querySelector('video');
       const bq  = cell.querySelector('blockquote');
       if (!vid) return;
+
+      const overlay = document.createElement('div');
+      overlay.className = 'vid-overlay';
+      overlay.innerHTML = '<div class="vid-play-btn">▶</div>';
+      cell.appendChild(overlay);
+
       vid.addEventListener('loadeddata', () => {
         vid.style.display = 'block';
         if (bq) bq.style.display = 'none';
+        overlay.style.display = 'flex';
+      });
+
+      overlay.addEventListener('click', () => {
+        const btn = overlay.querySelector('.vid-play-btn');
+        if (vid.paused) {
+          vid.play();
+          btn.innerHTML = '⏸';
+          overlay.classList.add('playing');
+        } else {
+          vid.pause();
+          btn.innerHTML = '▶';
+          overlay.classList.remove('playing');
+        }
+      });
+
+      vid.addEventListener('ended', () => {
+        overlay.querySelector('.vid-play-btn').innerHTML = '▶';
+        overlay.classList.remove('playing');
       });
     });
   </script>
