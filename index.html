@@ -801,7 +801,8 @@
 
     @media (max-width:600px) {
       .sec { padding:64px 5%; }
-      .vid-grid { grid-template-columns:repeat(3,1fr); gap:8px; }
+      .vid-grid { grid-template-columns:repeat(2,1fr); gap:10px; }
+      .vid-cell:nth-child(n+7) { display:none; }
       .steps { grid-template-columns:repeat(2,1fr); }
       .hero-badge { display:none; }
     }
@@ -1104,24 +1105,27 @@
   </div>
 
   <div class="vid-grid">
-    <div class="vid-cell" id="vc-1"><video src="videos/video1.MP4" playsinline loop></video></div>
-    <div class="vid-cell" id="vc-2"><video src="videos/video2.MP4" playsinline loop></video></div>
-    <div class="vid-cell" id="vc-3"><video src="videos/video3.MP4" playsinline loop></video></div>
-    <div class="vid-cell" id="vc-4"><video src="videos/video4.MP4" playsinline loop></video></div>
-    <div class="vid-cell" id="vc-5"><video src="videos/video5.MP4" playsinline loop></video></div>
-    <div class="vid-cell" id="vc-6"><video src="videos/video6.MP4" playsinline loop></video></div>
-    <div class="vid-cell" id="vc-7"><video src="videos/video7.MP4" playsinline loop></video></div>
-    <div class="vid-cell" id="vc-8"><video src="videos/video8.MP4" playsinline loop></video></div>
-    <div class="vid-cell" id="vc-9"><video src="videos/video9.MP4" playsinline loop></video></div>
-    <div class="vid-cell" id="vc-10"><video src="videos/video10.MP4" playsinline loop></video></div>
-    <div class="vid-cell" id="vc-11"><video src="videos/video11.MP4" playsinline loop></video></div>
-    <div class="vid-cell" id="vc-12"><video src="videos/video12.MP4" playsinline loop></video></div>
+    <div class="vid-cell" id="vc-1"><video preload="metadata" src="videos/video1.MP4" playsinline loop></video></div>
+    <div class="vid-cell" id="vc-2"><video preload="metadata" src="videos/video2.MP4" playsinline loop></video></div>
+    <div class="vid-cell" id="vc-3"><video preload="metadata" src="videos/video3.MP4" playsinline loop></video></div>
+    <div class="vid-cell" id="vc-4"><video preload="metadata" src="videos/video4.MP4" playsinline loop></video></div>
+    <div class="vid-cell" id="vc-5"><video preload="metadata" src="videos/video5.MP4" playsinline loop></video></div>
+    <div class="vid-cell" id="vc-6"><video preload="metadata" src="videos/video6.MP4" playsinline loop></video></div>
+    <div class="vid-cell" id="vc-7"><video preload="metadata" src="videos/video7.MP4" playsinline loop></video></div>
+    <div class="vid-cell" id="vc-8"><video preload="metadata" src="videos/video8.MP4" playsinline loop></video></div>
+    <div class="vid-cell" id="vc-9"><video preload="metadata" src="videos/video9.MP4" playsinline loop></video></div>
+    <div class="vid-cell" id="vc-10"><video preload="metadata" src="videos/video10.MP4" playsinline loop></video></div>
+    <div class="vid-cell" id="vc-11"><video preload="metadata" src="videos/video11.MP4" playsinline loop></video></div>
+    <div class="vid-cell" id="vc-12"><video preload="metadata" src="videos/video12.MP4" playsinline loop></video></div>
   </div>
   <script>
     // Video player with play/pause and sound
     document.querySelectorAll('.vid-cell').forEach(cell => {
       const vid = cell.querySelector('video');
       if (!vid) return;
+
+      // Show first frame on load
+      vid.addEventListener('loadedmetadata', () => { vid.currentTime = 0.001; });
 
       const overlay = document.createElement('div');
       overlay.className = 'vid-overlay';
