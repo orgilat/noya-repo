@@ -750,9 +750,9 @@
 
     /* ══ RESPONSIVE ══ */
     @media (max-width:1000px) {
-      .hero { grid-template-columns:1fr; padding:100px 5% 60px; }
+      .hero { grid-template-columns:1fr; padding:90px 5% 50px; }
       .hero-visual { order:-1; }
-      .hero-photo-frame { max-width:280px; margin-inline:auto; }
+      .hero-photo-frame { max-width:240px; margin-inline:auto; }
       .hero-btns, .hero-stats { justify-content:center; }
       .hero-stats { max-width:100%; grid-template-columns:repeat(2,1fr); }
       .hero-lead { margin-inline:auto; text-align:center; }
@@ -760,16 +760,110 @@
       .hero-h1 { text-align:center; }
       .why-grid { grid-template-columns:1fr; }
       .benefits-inner { grid-template-columns:1fr; }
-      .benefits-img { max-width:300px; margin-inline:auto; aspect-ratio:1/1; }
+      .benefits-img { max-width:260px; margin-inline:auto; aspect-ratio:1/1; }
       .about-grid { grid-template-columns:1fr; }
       .srv-grid { grid-template-columns:1fr; }
       .testi-grid { grid-template-columns:1fr; }
       .steps { grid-template-columns:repeat(3,1fr); }
       .steps::before { display:none; }
       .contact-wrap { grid-template-columns:1fr; }
-      .statsbar-inner { grid-template-columns:repeat(3,1fr); }
-      .sbar-item { border:none; border-bottom:1px solid rgba(255,255,255,.08); }
-      .sbar-item:nth-child(4), .sbar-item:nth-child(5) { border-bottom:none; }
+      .statsbar-inner {
+        display:flex; overflow-x:auto; -webkit-overflow-scrolling:touch;
+        scroll-snap-type:x mandatory;
+      }
+      .statsbar-inner::-webkit-scrollbar { display:none; }
+      .sbar-item {
+        flex:0 0 44vw; scroll-snap-align:start;
+        border:none; border-left:1px solid rgba(255,255,255,.1);
+        padding:28px 16px;
+      }
+      .sbar-item:first-child { border-left:none; }
+    }
+
+    @media (max-width:600px) {
+      /* ── מרווחים ── */
+      .sec { padding:48px 4%; }
+      .sec-hd-center { margin-bottom:36px; }
+      .sec-title { font-size:clamp(1.45rem,6vw,2rem); }
+
+      /* ── Hero ── */
+      .hero { padding:80px 4% 44px; gap:24px; }
+      .hero-photo-frame { max-width:190px; aspect-ratio:3/4; }
+      .hero-h1 { font-size:clamp(1.5rem,7vw,2.2rem); margin-bottom:12px; }
+      .hero-lead { font-size:.92rem; margin-bottom:20px; }
+      .hero-stats { gap:8px; margin-bottom:22px; }
+      .hstat { padding:12px 14px; }
+      .hstat-n { font-size:1.3rem; }
+      .hero-btns { gap:10px; }
+      .btn-lg { padding:13px 26px; font-size:.95rem; }
+
+      /* ── Why ── */
+      .why-card { padding:20px 16px; gap:12px; }
+      .why-ico { font-size:1.7rem; min-width:34px; }
+      .why-t { font-size:.95rem; }
+      .why-d { font-size:.83rem; }
+
+      /* ── Services ── */
+      .srv-card { padding:24px 20px; }
+      .srv-ico { font-size:2rem; margin-bottom:12px; }
+      .srv-t { font-size:1rem; }
+      .srv-d { font-size:.85rem; }
+
+      /* ── About / Benefits ── */
+      .about-img-frame { max-width:180px; margin-inline:auto; }
+      .about-text p { font-size:.92rem; margin-bottom:12px; }
+      .benefit-item { padding:12px 14px; gap:10px; }
+      .benefit-text { font-size:.88rem; }
+
+      /* ── Brands — גלילה אופקית ── */
+      .brands-wall {
+        flex-wrap:nowrap;
+        overflow-x:auto;
+        -webkit-overflow-scrolling:touch;
+        justify-content:flex-start;
+        scroll-snap-type:x mandatory;
+        padding-bottom:8px;
+        gap:10px;
+      }
+      .brands-wall::-webkit-scrollbar { display:none; }
+      .brand-card {
+        flex:0 0 88px;
+        min-width:88px;
+        height:60px;
+        padding:10px 12px;
+        scroll-snap-align:start;
+      }
+      .brand-card img { max-width:70px; max-height:34px; }
+
+      /* ── Steps ── */
+      .steps { grid-template-columns:repeat(2,1fr); gap:10px; }
+      .step-num { width:50px; height:50px; font-size:1.1rem; margin-bottom:10px; }
+      .step-t { font-size:.82rem; }
+      .step-d { font-size:.73rem; }
+
+      /* ── Videos ── */
+      .vid-grid { grid-template-columns:repeat(2,1fr); gap:8px; }
+      /* מציג את כל 12 סרטונים — 2 עמודות × 6 שורות */
+
+      /* ── Form ── */
+      .form-box { padding:24px 18px; }
+      .contact-wrap { gap:32px; }
+
+      /* ── Nav ── */
+      .nav { padding:12px 4%; }
+      .nav-logo { font-size:.95rem; }
+      .nav-cta { padding:8px 16px; font-size:.8rem; }
+
+      /* ── Hero badge ── */
+      .hero-badge { display:none; }
+
+      /* ── Stats bar ── */
+      .sbar-n { font-size:clamp(1.1rem,5vw,1.6rem); }
+      .sbar-l { font-size:.65rem; }
+
+      /* ── Final CTA ── */
+      .finalcta { padding:56px 4%; }
+      .finalcta-t { font-size:clamp(1.4rem,6vw,2rem); }
     }
     /* ══ VIDEO OVERLAY ══ */
     .vid-overlay {
@@ -799,17 +893,6 @@
     .vid-overlay:hover .vid-play-btn { background: rgba(192,96,126,.75); transform: scale(1.1); border-color: #fff; }
     .vid-overlay.playing .vid-play-btn { padding-left: 0; }
 
-    @media (max-width:600px) {
-      .sec { padding:64px 5%; }
-      .vid-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-      }
-      .vid-cell:nth-child(n+7) { display: none; }
-      .steps { grid-template-columns:repeat(2,1fr); }
-      .hero-badge { display:none; }
-    }
   </style>
 </head>
 <body>
