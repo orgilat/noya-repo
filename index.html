@@ -801,8 +801,21 @@
 
     @media (max-width:600px) {
       .sec { padding:64px 5%; }
-      .vid-grid { grid-template-columns:repeat(2,1fr); gap:10px; }
-      .vid-cell:nth-child(n+7) { display:none; }
+      .vid-grid {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        gap: 12px;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 8px;
+      }
+      .vid-grid::-webkit-scrollbar { display: none; }
+      .vid-cell {
+        flex: 0 0 72vw;
+        scroll-snap-align: start;
+        display: block;
+      }
       .steps { grid-template-columns:repeat(2,1fr); }
       .hero-badge { display:none; }
     }
